@@ -37,7 +37,8 @@ import {
 
 import { AppComponent } from './app.component';
 import { CurrentNightfallComponent } from './current-nightfall/current-nightfall.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
+import { BungieService } from './services/bungie.service';
 
 
 @NgModule({
@@ -81,7 +82,7 @@ import { AppRoutingModule } from './/app-routing.module';
     MatTooltipModule,
     MatStepperModule,
   ],
-  providers: [],
+  providers: [BungieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
