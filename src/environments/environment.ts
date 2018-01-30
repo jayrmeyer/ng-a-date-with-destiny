@@ -3,7 +3,7 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-const packageJson = require('../../package.json');
+//const packageJson = require('../../package.json');
 
 export const environment = {
   bungie: {
@@ -12,6 +12,7 @@ export const environment = {
     clientId: "23391",
   },
   production: false,
+  /*
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],
@@ -21,4 +22,5 @@ export const environment = {
     rxjs: packageJson.dependencies.rxjs,
     angularCli: packageJson.devDependencies['@angular/cli']
   }
+  */
 };

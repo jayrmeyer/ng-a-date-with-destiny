@@ -16,3 +16,12 @@ export class NameDesc {
       this.desc = desc;
   }
 }
+
+export class BungieResponse {
+  response: string;
+  errorCode: number;
+  throttleSeconds: number;
+  errorStatus: string;
+  message: string;
+  messageData: string;
+}

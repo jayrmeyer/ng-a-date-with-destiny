@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestMethod, RequestOptions, ResponseContentType } from '@angular/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { Nightfall } from '../models/nightfall';
+import { Nightfall, BungieResponse } from '../models/nightfall';
 
 import { environment } from '../../environments/environment';
 
@@ -12,8 +12,39 @@ const API_ROOT: string = "https://www.bungie.net/Platform/";
 
 @Injectable()
 export class BungieService {
+  res: BungieResponse;
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
+
+  public getNightfall(): BungieResponse {
+    const self: BungieService = this;
+
+    const headers = new HttpHeaders().set('X-API-Key', environment.bungie.apiKey);
+
+    console.log('calling bungie');
+    this.http
+      .get<BungieResponse>(
+        API_ROOT + 'Destiny2/Milestones/',
+        { headers }
+      ).subscribe(res => this.res = res);
+    console.log('done calling bungie');
+
+    console.log(this.res);
+
+    return this.res;
+  }
+
+  private parseBungieResponse(j: any): any {
+    if (j.ErrorCode && j.ErrorCode !== 1) {
+      throw new Error(j.Message);
+    }
+    if (!j.ErrorCode) {
+      throw new Error("Unexpected response from Bungie");
+    }
+    return j.Response;
+  }
+
+
 
   public getNightfall(): Promise<Nightfall> {
     const self: BungieService = this;
