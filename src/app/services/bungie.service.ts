@@ -23,13 +23,12 @@ export class BungieService {
 
     console.log('calling bungie');
     this.http
-      .get<BungieResponse>(
+      .get(
         API_ROOT + 'Destiny2/Milestones/',
-        { headers }
-      ).subscribe(res => this.res = res);
-    console.log('done calling bungie');
-
-    console.log(this.res);
+        { headers }).subscribe(
+          res => { console.log(res); },
+          err => console.error(err),
+          () => console.log('done calling bungie'));
 
     return this.res;
   }
