@@ -45,6 +45,7 @@ export class BungieService {
 
 
 
+  /*
   public getNightfall(): Promise<Nightfall> {
     const self: BungieService = this;
     return this.buildReqOptions().then(opt => {
@@ -97,5 +98,6 @@ export class BungieService {
 
     });
   }
+  */
 
 }
