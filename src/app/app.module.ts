@@ -35,6 +35,7 @@ import {
   MatStepperModule,
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import * as JSZip from 'jszip';
 
 import { AppComponent } from './app.component';
 import { CurrentNightfallComponent } from './current-nightfall/current-nightfall.component';
@@ -83,6 +84,7 @@ import { BungieService } from './services/bungie.service';
     MatTooltipModule,
     MatStepperModule,
     HttpClientModule,
+    JSZip,
   ],
   providers: [BungieService],
   bootstrap: [AppComponent]
