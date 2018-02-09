@@ -35,12 +35,13 @@ import {
   MatStepperModule,
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
-import * as JSZip from 'jszip';
+//import * as JSZip from 'jszip';
 
 import { AppComponent } from './app.component';
 import { CurrentNightfallComponent } from './current-nightfall/current-nightfall.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BungieService } from './services/bungie.service';
+import { DestinyCacheService } from './services/destiny-cache.service';
 
 
 @NgModule({
@@ -84,9 +85,9 @@ import { BungieService } from './services/bungie.service';
     MatTooltipModule,
     MatStepperModule,
     HttpClientModule,
-    JSZip,
+    //JSZip,
   ],
-  providers: [BungieService],
+  providers: [BungieService, DestinyCacheService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
