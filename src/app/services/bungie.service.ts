@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { catchError, map, tap } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
 
 import { Nightfall, BungieResponse } from '../models/nightfall';
 
@@ -23,15 +24,13 @@ export class BungieService {
     const headers = new HttpHeaders().set('X-API-Key', environment.bungie.apiKey);
 
     console.log('calling bungie');
-    return new Observable<BungieResponse>(
-    this.http
+    return this.http
       .get<BungieResponse>(
         API_ROOT + 'Destiny2/Milestones/',
-        { headers }).subscribe(
-          res => { console.log(res); },
-          err => console.error(err),
-          () => console.log('done calling bungie')
-        );
+        { headers })
+      .pipe(
+          tap (res => { console.log(res); }
+        )
       );
 /*
     this.http
@@ -43,7 +42,7 @@ export class BungieService {
       () => console.log('done calling bungie')
       );
 */
-    return this.res;
+    //return this.res;
   }
 
   private parseBungieResponse(j: any): any {

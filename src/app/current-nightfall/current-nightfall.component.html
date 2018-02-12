@@ -7,13 +7,14 @@
   </mat-card-header>
   <mat-card-content>
     <h4>Modifiers</h4>
-
-      {{response.response}}
-      {{response.errorCode}}
-      {{response.throttleSeconds}}
-      {{response.errorStatus}}
-      {{response.message}}
-      {{response.messageData}}
+      <div *ngIf="response">
+        {{response.response}}
+        {{response.errorCode}}
+        {{response.throttleSeconds}}
+        {{response.errorStatus}}
+        {{response.message}}
+        {{response.messageData}}
+      </div>
 
     <h4>Challenges</h4>
 

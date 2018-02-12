@@ -18,8 +18,8 @@ export class CurrentNightfallComponent implements OnInit {
   }
 
   getNightfall(): void {
-    let response = this.bungieService.getNightfall();
-      // .subscribe(response => this.response = response);
+    this.bungieService.getNightfall()
+       .subscribe(response => this.response = response);
   }
 
 }

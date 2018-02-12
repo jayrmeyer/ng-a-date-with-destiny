@@ -17,7 +17,7 @@ export class NameDesc {
   }
 }
 
-export class BungieResponse {
+export interface BungieResponse {
   response: string;
   errorCode: number;
   throttleSeconds: number;
