@@ -22,7 +22,7 @@
       <div *ngIf="publicMilestones">
         <p>number of public milestones: {{publicMilestones.length}}</p>
         <ul>
-          <li *ngFor='let publicMilestone of publicMilestones | values'>
+          <li *ngFor='let publicMilestone of publicMilestones | values:"key"'>
             <p>id: {{publicMilestone.milestoneHash}}</p>
             <p>start date: {{publicMilestone.startDate}}</p>
             <p>end date: {{publicMilestone.endDate}}</p>
