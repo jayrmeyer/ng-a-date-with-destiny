@@ -3,7 +3,8 @@ import { BungieService } from '../services/bungie.service';
 import { Observable } from 'rxjs/Observable';
 import { BungieResponse } from '../models/nightfall';
 import '../models/destiny-public-milestone';
-import { DestinyPublicMilestone } from '../models/destiny-public-milestone';
+import { DestinyPublicMilestone, PublicMilestone } from '../models/destiny-public-milestone';
+import { ParseService } from '../services/parse.service';
 
 @Component({
   selector: 'app-current-nightfall',
@@ -13,9 +14,10 @@ import { DestinyPublicMilestone } from '../models/destiny-public-milestone';
 export class CurrentNightfallComponent implements OnInit {
   resp: BungieResponse;
   publicMilestones: DestinyPublicMilestone[];
+  milestones: PublicMilestone[];
   public arrayOfKeys;
 
-  constructor(private bungieService: BungieService) { }
+  constructor(private bungieService: BungieService, private parseService: ParseService) { }
 
   ngOnInit() {
     // this.getNightfall();
@@ -39,6 +41,7 @@ export class CurrentNightfallComponent implements OnInit {
         console.log(this.publicMilestones[202035466]);
         console.log(this.publicMilestones[463010297]);
         console.log('array size: ' + this.publicMilestones);
+        this.milestones = this.parseService.parseMilestones(response.Response);
       });
   }
 

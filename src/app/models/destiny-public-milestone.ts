@@ -1,3 +1,5 @@
+// Following set of classes are for the base message with hash values
+// "Usable" classes with descriptions are listed below
 export interface DestinyPublicMilestone {
   milestoneHash: number;
   availableQuests: DestinyPublicMilestoneQuest[];
@@ -37,3 +39,41 @@ export interface DestinyPublicMilestoneChallenge {
   objectiveHash: number;
   activityHash: number;
 }
+
+// Following are the "Usable" classes
+export class PublicMilestone {
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  image: string;
+  milestoneType: string;
+  recruitable: boolean;
+  friendlyName: string;
+  showInExplorer: boolean;
+  explorePrioritizesActivityImage: string;
+  hasPredictableDates: boolean;
+  // quests: DestinyMilestoneQuestDefinition;
+  // rewards: DestinyMilestoneRewardCategoryDefinition;
+  vendorsDisplayTitle: string;
+  // vendors: DestinyMilestoneVendorDefinition[];
+  // values: DestinyMilestoneValueDefinition;
+  isInGameMilestone: boolean;
+  hash: number;
+  index: number;
+  redacted: boolean;
+}
+
+export class DestinyDisplayPropertiesDefinition {
+  description: string;
+  name: string;
+  icon: string;
+  hasIcon: boolean;
+}
+
+/*
+export class DestinyMilestoneQuestDefinition {
+  questItemHash: number;
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  overrideImage: string;
+  questRewards: DestinyMilestoneQuestRewardsDefinition;
+  activities:
+}
+*/

@@ -42,6 +42,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BungieService } from './services/bungie.service';
 import { DestinyCacheService } from './services/destiny-cache.service';
 import { ValuesPipe } from './pipes/values.pipe';
+import { ParseService } from './services/parse.service';
 
 
 @NgModule({
@@ -87,7 +88,7 @@ import { ValuesPipe } from './pipes/values.pipe';
     MatStepperModule,
     HttpClientModule,
   ],
-  providers: [BungieService, DestinyCacheService],
+  providers: [BungieService, DestinyCacheService, ParseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
