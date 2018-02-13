@@ -1,3 +1,6 @@
+import './destiny-public-milestone';
+import { DestinyPublicMilestone } from './destiny-public-milestone';
+
 export class Nightfall {
   name: string;
   desc: string;
@@ -18,10 +21,10 @@ export class NameDesc {
 }
 
 export interface BungieResponse {
-  response: string;
-  errorCode: number;
-  throttleSeconds: number;
-  errorStatus: string;
-  message: string;
-  messageData: string;
+  Response: DestinyPublicMilestone[];
+  ErrorCode: number;
+  ThrottleSeconds: number;
+  ErrorStatus: string;
+  Message: string;
+  MessageData: string;
 }

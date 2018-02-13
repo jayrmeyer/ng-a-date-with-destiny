@@ -35,19 +35,20 @@ import {
   MatStepperModule,
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
-//import * as JSZip from 'jszip';
 
 import { AppComponent } from './app.component';
 import { CurrentNightfallComponent } from './current-nightfall/current-nightfall.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BungieService } from './services/bungie.service';
 import { DestinyCacheService } from './services/destiny-cache.service';
+import { ValuesPipe } from './pipes/values.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CurrentNightfallComponent
+    CurrentNightfallComponent,
+    ValuesPipe
   ],
   imports: [
     BrowserModule,
@@ -85,7 +86,6 @@ import { DestinyCacheService } from './services/destiny-cache.service';
     MatTooltipModule,
     MatStepperModule,
     HttpClientModule,
-    //JSZip,
   ],
   providers: [BungieService, DestinyCacheService],
   bootstrap: [AppComponent]

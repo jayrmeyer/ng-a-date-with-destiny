@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import { Nightfall, BungieResponse } from '../models/nightfall';
 
 import { environment } from '../../environments/environment';
+import { DestinyPublicMilestone } from '../models/destiny-public-milestone';
 
 const API_ROOT: string = "https://www.bungie.net/Platform/";
 
@@ -32,17 +33,17 @@ export class BungieService {
           tap (res => { console.log(res); }
         )
       );
-/*
-    this.http
-      .get(
+  }
+
+  public getPublicMilestones(): Observable<BungieResponse> {
+    const headers = new HttpHeaders().set('X-API-Key', environment.bungie.apiKey);
+
+    return this.http.get<BungieResponse>(
       API_ROOT + 'Destiny2/Milestones/',
-      { headers }).subscribe(
-      res => { console.log(res); },
-      err => console.error(err),
-      () => console.log('done calling bungie')
-      );
-*/
-    //return this.res;
+      { headers })
+      .pipe(
+        tap (res => { console.log(res); })
+    );
   }
 
   private parseBungieResponse(j: any): any {
