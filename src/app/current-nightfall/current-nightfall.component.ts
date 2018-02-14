@@ -15,7 +15,6 @@ export class CurrentNightfallComponent implements OnInit {
   resp: BungieResponse;
   publicMilestones: DestinyPublicMilestone[];
   milestones: PublicMilestone[];
-  public arrayOfKeys;
 
   constructor(private bungieService: BungieService, private parseService: ParseService) { }
 
@@ -35,12 +34,6 @@ export class CurrentNightfallComponent implements OnInit {
     this.bungieService.getPublicMilestones()
       .subscribe(response => {
         this.publicMilestones = response.Response;
-        this.arrayOfKeys = Object.keys(this.publicMilestones);
-        console.log('in getPublicMilestones, response is ');
-        console.log(response.Response);
-        console.log(this.publicMilestones[202035466]);
-        console.log(this.publicMilestones[463010297]);
-        console.log('array size: ' + this.publicMilestones);
         this.milestones = this.parseService.parseMilestones(response.Response);
       });
   }

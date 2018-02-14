@@ -23,6 +23,12 @@ export class DestinyCacheService {
             console.log('in cache service, json loaded');
             this.cache = JSON.parse(data);
             console.log('in cache service, json parsed');
+            resolve();
+            return;
+          },
+          (err) => {
+            reject(err);
+            return;
           });
         });
       });

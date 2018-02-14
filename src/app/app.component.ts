@@ -19,6 +19,8 @@ export class AppComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.destinyCacheService.init();
+    this.destinyCacheService.init().then(() => {
+      console.log('in AppComponent.ngOnInit, cache loaded');
+    });
   }
 }

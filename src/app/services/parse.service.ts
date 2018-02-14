@@ -15,17 +15,26 @@ export class ParseService {
     Object.keys(unparsedMilestones).forEach((key: any) => {
       let milestone: PublicMilestone = new PublicMilestone();
 
-      console.log('current key: ' + key);
-      if (!this.destinyCacheService) {
-        console.error('destinyCacheService is null!');
-      }
-      if (!this.destinyCacheService.cache) {
-        console.error('destinyCacheService.cache is null!');
-      }
-      if (this.destinyCacheService.cache.Milestone[unparsedMilestones[key].milestoneHash]) {
-        console.log(this.destinyCacheService.cache.Milestone[unparsedMilestones[key].milestoneHash]);
-        milestone.displayProperties = this.destinyCacheService.cache.Milestone[unparsedMilestones[key].milestoneHash].displayProperties;
-        // this.destinyCacheService.cache.Milestone
+      console.log('current milestone key: ' + key);
+      console.log('current unparsed milestone is');
+      console.log(unparsedMilestones[key]);
+
+      const cacheMilestone = this.destinyCacheService.cache.Milestone[unparsedMilestones[key].milestoneHash];
+
+
+      // check to see if we can find the milestone in the cache; if not log an error to the console
+      if (cacheMilestone) {
+        console.log('cache for current milestone is');
+        console.log(cacheMilestone);
+
+        // check if quests exist for this milestone
+        if (unparsedMilestones[key].availableQuests) {
+          console.log('looking up quest data for id ' + unparsedMilestones[key].availableQuests[0].questItemHash);
+          milestone.displayProperties = cacheMilestone.quests[unparsedMilestones[key].availableQuests[0].questItemHash].displayProperties;
+        } else {
+          console.log('quest data unavailable, using milestone data');
+          milestone.displayProperties = cacheMilestone.displayProperties;
+        }
 
         returnArr.push(milestone);
       } else {
