@@ -7,25 +7,23 @@
   </mat-card-header>
   <mat-card-content>
     <h4>Modifiers</h4>
-      <div *ngIf="resp">
-        <p>response: {{resp.Response}}</p>
-        <p>error code: {{resp.ErrorCode}}</p>
-        <p>throttle seconds: {{resp.ThrottleSeconds}}</p>
-        <p>error status: {{resp.ErrorStatus}}</p>
-        <p>message: {{resp.Message}}</p>
-        <p>message data: {{resp.MessageData}}</p>
-      </div>
 
       <p></p>
       <p></p>
 
-      <div *ngIf="publicMilestones">
-        <p>number of public milestones: {{publicMilestones.length}}</p>
+      <!--<div *ngIf="publicMilestones">-->
+      <div *ngIf="milestones">
         <ul>
+          <!--
           <li *ngFor='let publicMilestone of publicMilestones | values:"key"'>
             <p>id: {{publicMilestone.milestoneHash}}</p>
             <p>start date: {{publicMilestone.startDate}}</p>
             <p>end date: {{publicMilestone.endDate}}</p>
+          </li>
+          -->
+          <li *ngFor='let milestone of milestones'>
+            <p>{{milestone.displayProperties.name}}</p>
+            <p>{{milestone.displayProperties.description}}</p>
           </li>
         </ul>
       </div>
