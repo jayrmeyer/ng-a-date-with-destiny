@@ -4,6 +4,8 @@ import { DestinyCacheService } from './destiny-cache.service';
 import '../models/destiny-public-milestone';
 import { DestinyPublicMilestone, PublicMilestone } from '../models/destiny-public-milestone';
 
+const CONTENT_BASE_URL = "http://www.bungie.net/";
+
 @Injectable()
 export class ParseService {
 
@@ -28,6 +30,7 @@ export class ParseService {
         console.log('cache for current milestone is');
         console.log(cacheMilestone);
 
+        // find display properties
         if (cacheMilestone.displayProperties) {
           console.log('using milestone data');
           milestone.displayProperties = cacheMilestone.displayProperties;
@@ -41,6 +44,13 @@ export class ParseService {
             populateReturn = false;
           }
         }
+
+        // populate image
+        milestone.image = CONTENT_BASE_URL + cacheMilestone.image;
+
+        // TODO: Parse activities
+
+        // TODO: Parse modifiers
 
         if (populateReturn) {
           returnArr.push(milestone);
