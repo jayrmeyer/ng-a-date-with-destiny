@@ -11,6 +11,7 @@ export class ParseService {
 
   public parseMilestones(unparsedMilestones: DestinyPublicMilestone[]): PublicMilestone[] {
     let returnArr: PublicMilestone[] = [];
+    let populateReturn = true;
 
     Object.keys(unparsedMilestones).forEach((key: any) => {
       let milestone: PublicMilestone = new PublicMilestone();
@@ -27,16 +28,23 @@ export class ParseService {
         console.log('cache for current milestone is');
         console.log(cacheMilestone);
 
-        // check if quests exist for this milestone
-        if (unparsedMilestones[key].availableQuests) {
-          console.log('looking up quest data for id ' + unparsedMilestones[key].availableQuests[0].questItemHash);
-          milestone.displayProperties = cacheMilestone.quests[unparsedMilestones[key].availableQuests[0].questItemHash].displayProperties;
-        } else {
-          console.log('quest data unavailable, using milestone data');
+        if (cacheMilestone.displayProperties) {
+          console.log('using milestone data');
           milestone.displayProperties = cacheMilestone.displayProperties;
+        } else {
+          console.log('attempting to use quest data');
+          if (unparsedMilestones[key].availableQuests) {
+            console.log('found quests');
+            milestone.displayProperties = cacheMilestone.quests[unparsedMilestones[key].availableQuests[0].questItemHash].displayProperties;
+          } else {
+            console.error('no display properities found for ' + key);
+            populateReturn = false;
+          }
         }
 
-        returnArr.push(milestone);
+        if (populateReturn) {
+          returnArr.push(milestone);
+        }
       } else {
         console.error('Error! Could not find milestone data for ' + key);
       }
