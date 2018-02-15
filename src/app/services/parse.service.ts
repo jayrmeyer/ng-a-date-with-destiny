@@ -14,6 +14,7 @@ export class ParseService {
   public parseMilestones(unparsedMilestones: DestinyPublicMilestone[]): PublicMilestone[] {
     let returnArr: PublicMilestone[] = [];
     let populateReturn = true;
+    let questsAvailable = true;
 
     Object.keys(unparsedMilestones).forEach((key: any) => {
       let milestone: PublicMilestone = new PublicMilestone();
@@ -21,6 +22,11 @@ export class ParseService {
       console.log('current milestone key: ' + key);
       console.log('current unparsed milestone is');
       console.log(unparsedMilestones[key]);
+
+      const unparsedQuests = unparsedMilestones[key].availableQuests;
+      if (!unparsedQuests) {
+        questsAvailable = false;
+      }
 
       const cacheMilestone = this.destinyCacheService.cache.Milestone[unparsedMilestones[key].milestoneHash];
 
@@ -36,7 +42,7 @@ export class ParseService {
           milestone.displayProperties = cacheMilestone.displayProperties;
         } else {
           console.log('attempting to use quest data');
-          if (unparsedMilestones[key].availableQuests) {
+          if (questsAvailable) {
             console.log('found quests');
             milestone.displayProperties = cacheMilestone.quests[unparsedMilestones[key].availableQuests[0].questItemHash].displayProperties;
           } else {
@@ -49,6 +55,13 @@ export class ParseService {
         milestone.image = CONTENT_BASE_URL + cacheMilestone.image;
 
         // TODO: Parse activities
+        if (questsAvailable) {
+          console.log('getting activities');
+          Object.keys(unparsedQuests).forEach((questKey) => {
+            console.log('activity is ');
+            console.log(unparsedQuests[questKey]);
+          });
+        }
 
         // TODO: Parse modifiers
 
