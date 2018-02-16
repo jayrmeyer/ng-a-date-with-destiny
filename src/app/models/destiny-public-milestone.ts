@@ -1,3 +1,8 @@
+import { DestinyDisplayPropertiesDefinition } from './general-models';
+import { DestinyInventoryItemDefinition, DestinyItemQuantity } from './destiny-item';
+import { DestinyVendorDefinition } from './destiny-vendor';
+import { DestinyActivityDefinition } from './destiny-activity';
+
 // Following set of classes are for the base message with hash values
 // "Usable" classes with descriptions are listed below
 export interface DestinyPublicMilestone {
@@ -42,6 +47,7 @@ export interface DestinyPublicMilestoneChallenge {
 
 // Following are the "Usable" classes
 export class PublicMilestone {
+  milestoneHash: number;
   displayProperties: DestinyDisplayPropertiesDefinition;
   image: string;
   milestoneType: string;
@@ -50,30 +56,80 @@ export class PublicMilestone {
   showInExplorer: boolean;
   explorePrioritizesActivityImage: string;
   hasPredictableDates: boolean;
-  // quests: DestinyMilestoneQuestDefinition;
-  // rewards: DestinyMilestoneRewardCategoryDefinition;
+  quests: DestinyMilestoneQuestDefinition;
+  rewards: DestinyMilestoneRewardCategoryDefinition;
   vendorsDisplayTitle: string;
-  // vendors: DestinyMilestoneVendorDefinition[];
-  // values: DestinyMilestoneValueDefinition;
+  vendorHashes: number[];
+  vendors: DestinyMilestoneVendorDefinition[];
+  values: DestinyMilestoneValueDefinition;
   isInGameMilestone: boolean;
   hash: number;
   index: number;
   redacted: boolean;
+  startDate: Date;
+  endDate: Date;
 }
 
-export class DestinyDisplayPropertiesDefinition {
-  description: string;
-  name: string;
-  icon: string;
-  hasIcon: boolean;
-}
-
-/*
 export class DestinyMilestoneQuestDefinition {
   questItemHash: number;
+  questItemDefinition: DestinyInventoryItemDefinition;
   displayProperties: DestinyDisplayPropertiesDefinition;
   overrideImage: string;
   questRewards: DestinyMilestoneQuestRewardsDefinition;
-  activities:
+  activities: DestinyMilestoneActivityDefinition;
 }
-*/
+
+export class DestinyMilestoneQuestRewardsDefinition {
+  items: DestinyMilestoneQuestRewardItem[];
+}
+
+export class DestinyMilestoneActivityDefinition {
+  conceptualActivityHash: number;
+  conceptualActivity: DestinyActivityDefinition;
+  variants: DestinyMilestoneActivityVariantDefinition;
+
+}
+
+export class DestinyMilestoneQuestRewardItem {
+  vendorHash: number;
+  vendor: DestinyVendorDefinition;
+  vendorItemIndex: number;
+  itemHash: number;
+  item: DestinyInventoryItemDefinition;
+  itemInstanceId: number;
+  quantity: number;
+}
+
+export class DestinyMilestoneActivityVariantDefinition {
+  activityHash: number;
+  activity: DestinyActivityDefinition;
+  order: number;
+}
+
+export class DestinyMilestoneRewardCategoryDefinition {
+  categoryHash: number;
+  categoryIdentifier: string;
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  rewardEntries: DestinyMilestoneRewardEntryDefinition;
+  order: number;
+}
+
+export class DestinyMilestoneRewardEntryDefinition {
+  rewardEntryHash: number;
+  rewardEntryIdentifier: string;
+  items: DestinyItemQuantity;
+  vendorHash: number;
+  vendor: DestinyVendorDefinition;
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  order: number;
+}
+
+export class DestinyMilestoneVendorDefinition {
+  vendorHash: number;
+  vendor: DestinyVendorDefinition;
+}
+
+export class DestinyMilestoneValueDefinition {
+  key: string;
+  displayProperties: DestinyDisplayPropertiesDefinition;
+}

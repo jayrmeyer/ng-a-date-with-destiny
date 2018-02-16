@@ -12,12 +12,12 @@ export class ParseService {
   constructor(private destinyCacheService: DestinyCacheService) { }
 
   public parseMilestones(unparsedMilestones: DestinyPublicMilestone[]): PublicMilestone[] {
-    let returnArr: PublicMilestone[] = [];
+    const returnArr: PublicMilestone[] = [];
     let populateReturn = true;
     let questsAvailable = true;
 
     Object.keys(unparsedMilestones).forEach((key: any) => {
-      let milestone: PublicMilestone = new PublicMilestone();
+      const milestone: PublicMilestone = new PublicMilestone();
 
       console.log('current milestone key: ' + key);
       console.log('current unparsed milestone is');
@@ -27,6 +27,8 @@ export class ParseService {
       if (!unparsedQuests) {
         questsAvailable = false;
       }
+
+      milestone.milestoneHash = key;
 
       const cacheMilestone = this.destinyCacheService.cache.Milestone[unparsedMilestones[key].milestoneHash];
 
@@ -60,6 +62,12 @@ export class ParseService {
           Object.keys(unparsedQuests).forEach((questKey) => {
             console.log('activity is ');
             console.log(unparsedQuests[questKey]);
+            console.log(this.destinyCacheService.cache.InventoryItem[unparsedQuests[questKey].questItemHash]);
+            const unparsedActivity = unparsedQuests[questKey].activity;
+            if (unparsedActivity) {
+              console.log('looking up activity for ' + unparsedActivity.activityHash);
+              console.log(this.destinyCacheService.cache.Activity[unparsedActivity.activityHash]);
+            }
           });
         }
 
