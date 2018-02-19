@@ -2,9 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { DestinyCacheService } from './destiny-cache.service';
 import '../models/destiny-public-milestone';
-import { DestinyPublicMilestone, PublicMilestone } from '../models/destiny-public-milestone';
+import { DestinyPublicMilestone,
+         PublicMilestone,
+         DestinyMilestoneQuestDefinition,
+         DestinyMilestoneActivityDefinition } from '../models/destiny-public-milestone';
+import { DestinyActivityDefinition, DestinyActivityModifierDefinition, DestinyActivityChallengeDefinition } from '../models/destiny-activity';
+import { DestinyObjectiveDefinition } from '../models/destiny-objective';
 
-const CONTENT_BASE_URL = "http://www.bungie.net/";
+const CONTENT_BASE_URL = 'http://www.bungie.net/';
 
 @Injectable()
 export class ParseService {
@@ -26,6 +31,8 @@ export class ParseService {
       const unparsedQuests = unparsedMilestones[key].availableQuests;
       if (!unparsedQuests) {
         questsAvailable = false;
+      } else {
+        questsAvailable = true;
       }
 
       milestone.milestoneHash = key;
@@ -40,12 +47,9 @@ export class ParseService {
 
         // find display properties
         if (cacheMilestone.displayProperties) {
-          console.log('using milestone data');
           milestone.displayProperties = cacheMilestone.displayProperties;
         } else {
-          console.log('attempting to use quest data');
           if (questsAvailable) {
-            console.log('found quests');
             milestone.displayProperties = cacheMilestone.quests[unparsedMilestones[key].availableQuests[0].questItemHash].displayProperties;
           } else {
             console.error('no display properities found for ' + key);
@@ -54,24 +58,48 @@ export class ParseService {
         }
 
         // populate image
-        milestone.image = CONTENT_BASE_URL + cacheMilestone.image;
+        if (cacheMilestone.image) {
+          milestone.image = cacheMilestone.image;
+        }
 
-        // TODO: Parse activities
+        // populate other milestone level properties
+        milestone.milestoneType = cacheMilestone.milestoneType;
+        milestone.recruitable = cacheMilestone.recruitable;
+        milestone.friendlyName = cacheMilestone.friendlyName;
+        milestone.showInExplorer = cacheMilestone.showInExplorer;
+        milestone.explorePrioritizesActivityImage = cacheMilestone.explorePrioritizesActivityImage;
+        milestone.hasPredictableDates = cacheMilestone.hasPredictableDates;
+        milestone.vendorsDisplayTitle = cacheMilestone.vendorsDisplayTitle;
+        milestone.vendorHashes = cacheMilestone.vendorHashes;
+        milestone.isInGameMilestone = cacheMilestone.isInGameMilestone;
+        milestone.hash = cacheMilestone.hash;
+        milestone.index = cacheMilestone.index;
+        milestone.redacted = cacheMilestone.redacted;
+        milestone.startDate = cacheMilestone.startDate;
+        milestone.endDate = cacheMilestone.endDate;
+
+        // TODO: Parse quests
         if (questsAvailable) {
-          console.log('getting activities');
+          milestone.quests = [];
           Object.keys(unparsedQuests).forEach((questKey) => {
-            console.log('activity is ');
-            console.log(unparsedQuests[questKey]);
-            console.log(this.destinyCacheService.cache.InventoryItem[unparsedQuests[questKey].questItemHash]);
+            const cacheQuest = cacheMilestone.quests[unparsedQuests[questKey].questItemHash];
+            const quest: DestinyMilestoneQuestDefinition = new DestinyMilestoneQuestDefinition();
+
+            quest.questItemHash = cacheQuest.questItemHash;
+            quest.displayProperties = cacheQuest.displayProperties;
+            quest.questItemDefinition = cacheQuest.questItemDefinition; // this isn't right
+            quest.overrideImage = cacheQuest.overrideImage;
+
             const unparsedActivity = unparsedQuests[questKey].activity;
             if (unparsedActivity) {
               console.log('looking up activity for ' + unparsedActivity.activityHash);
               console.log(this.destinyCacheService.cache.Activity[unparsedActivity.activityHash]);
+              quest.activities = this.parseActivity(unparsedActivity);
             }
+
+            milestone.quests.push(quest);
           });
         }
-
-        // TODO: Parse modifiers
 
         if (populateReturn) {
           returnArr.push(milestone);
@@ -84,5 +112,85 @@ export class ParseService {
     console.log('return array follows');
     console.log(returnArr);
     return returnArr;
+  }
+
+  public parseActivity(unparsedActivity): DestinyMilestoneActivityDefinition {
+    const activity: DestinyMilestoneActivityDefinition = new DestinyMilestoneActivityDefinition;
+    const cacheActivity = this.destinyCacheService.cache.Activity[unparsedActivity.activityHash];
+
+    activity.conceptualActivityHash = cacheActivity.hash;
+    activity.conceptualActivity = new DestinyActivityDefinition;
+    activity.conceptualActivity.displayProperties = cacheActivity.displayProperties;
+    activity.conceptualActivity.index = cacheActivity.index;
+    activity.conceptualActivity.activityTypeHash = cacheActivity.activityTypeHash;
+    activity.conceptualActivity.activityLevel = cacheActivity.activityLevel;
+    activity.conceptualActivity.activityLightLevel = cacheActivity.activityLightLevel;
+    activity.conceptualActivity.activityModeHashes = cacheActivity.activityModeHashes;
+    // activity.conceptualAcitivity.activityModes
+    activity.conceptualActivity.activityModeTypes = cacheActivity.activityModeTypes;
+    // activity.conceptualActivity.challenges
+
+    const unparsedChallenges = cacheActivity.challenges;
+    console.log('unparsed challenges');
+    console.log(unparsedChallenges);
+    if (unparsedChallenges) {
+      activity.conceptualActivity.challenges = [];
+      for (let  i = 0; i < unparsedChallenges.length; i++) {
+        const challenge = new DestinyActivityChallengeDefinition();
+        const cacheChalllenge = this.destinyCacheService.cache.Objective[unparsedChallenges[i].objectiveHash];
+        console.log('cache challenge is');
+        console.log(cacheChalllenge);
+        challenge.objective = new DestinyObjectiveDefinition();
+
+        challenge.objective.hash = unparsedChallenges[i].objectiveHash;
+        challenge.objective.displayProperties = cacheChalllenge.displayProperties;
+        challenge.objective.allowNegativeValue = cacheChalllenge.allowNegativeValue;
+        challenge.objective.allowValueChangeWhenCompleted = cacheChalllenge.allowValueChangeWhenCompleted;
+        challenge.objective.completionValue = cacheChalllenge.completionValue;
+        challenge.objective.index = cacheChalllenge.index;
+        challenge.objective.isCountingDownward = cacheChalllenge.isCountingDownward;
+        challenge.objective.locationHash = cacheChalllenge.locationHash;
+        challenge.objective.perks = cacheChalllenge.perks;
+        challenge.objective.progressDescription = cacheChalllenge.progressDescription;
+        challenge.objective.redacted = cacheChalllenge.redacted;
+        challenge.objective.stats = cacheChalllenge.stats;
+        challenge.objective.valueStyle = cacheChalllenge.valueStyle;
+
+        activity.conceptualActivity.challenges.push(challenge);
+      }
+    }
+    activity.conceptualActivity.destinationHash = cacheActivity.destinationHash;
+    // activity.conceptualActivity.destination
+    activity.conceptualActivity.directActivityModeHash = cacheActivity.directActivityModeHash;
+    // activity.conceptualActivity.directActivityMode
+    activity.conceptualActivity.directActivityModeType = cacheActivity.directActivityModeType;
+    activity.conceptualActivity.matchmaking = cacheActivity.matchmaking;
+
+    const unparsedModifiers = unparsedActivity.modifierHashes;
+    if (unparsedModifiers) {
+      activity.conceptualActivity.modifiers = [];
+
+      for (let i = 0; i < unparsedActivity.modifierHashes.length; i++) {
+        const cacheModifier = this.destinyCacheService.cache.ActivityModifier[unparsedModifiers[i]];
+        const modifier = new DestinyActivityModifierDefinition();
+
+        modifier.displayProperties = cacheModifier.displayProperties;
+        modifier.hash = cacheModifier.hash;
+
+        activity.conceptualActivity.modifiers.push(modifier);
+      }
+    }
+
+    activity.conceptualActivity.pgcrImage = cacheActivity.pgcrImage;
+    activity.conceptualActivity.playlistItems = cacheActivity.playlistItems;
+    activity.conceptualActivity.redacted = cacheActivity.redacted;
+    activity.conceptualActivity.releaseIcon = cacheActivity.releaseIcon;
+    activity.conceptualActivity.releaseTime = cacheActivity.releaseTime;
+    // activity.conceptualActivity.rewards
+    activity.conceptualActivity.tier = cacheActivity.tier;
+    activity.conceptualActivity.isPvP = cacheActivity.isPvP;
+    activity.conceptualActivity.isPlaylist = cacheActivity.isPlaylist;
+
+    return activity;
   }
 }

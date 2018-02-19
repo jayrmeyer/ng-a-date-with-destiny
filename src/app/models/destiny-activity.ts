@@ -1,4 +1,5 @@
 import { DestinyDisplayPropertiesDefinition } from './general-models';
+import { DestinyObjectiveDefinition } from './destiny-objective';
 
 export class DestinyActivityDefinition {
   displayProperties: DestinyDisplayPropertiesDefinition;
@@ -15,7 +16,7 @@ export class DestinyActivityDefinition {
   tier: number;
   pgcrImage: string;
   rewards: DestinyActivityRewardDefinition[];
-  modifiers: DestinyActivityModifierReferenceDefinition;
+  modifiers: DestinyActivityModifierDefinition[];
   isPlaylist: boolean;
   challenges: DestinyActivityChallengeDefinition[];
   optionalUnlockStrings: DestinyActivityUnlockStringDefinition[];
@@ -105,5 +106,44 @@ export class DestinyBubbleDefinition {
 }
 
 export class DestinyActivityTypeDefinition {
+
+}
+
+export class DestinyActivityRewardDefinition {
+
+}
+
+export class DestinyActivityModifierDefinition {
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  hash: number;
+  index: number;
+  redacted: boolean;
+}
+
+export class DestinyActivityChallengeDefinition {
+  objective: DestinyObjectiveDefinition;
+}
+
+export class DestinyActivityUnlockStringDefinition {
+
+}
+
+export class DestinyActivityPlaylistItemDefinition {
+
+}
+
+export class DestinyActivityMatchmakingBlockDefinition {
+
+}
+
+export class DestinyActivityGuidedBlockDefinition {
+
+}
+
+export class DestinyActivityModeDefinition {
+
+}
+
+export class DestinyActivityModeType {
 
 }

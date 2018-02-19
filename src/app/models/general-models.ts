@@ -4,3 +4,7 @@ export class DestinyDisplayPropertiesDefinition {
   icon: string;
   hasIcon: boolean;
 }
+
+export class DestinyColor {
+
+}

@@ -37,19 +37,24 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { CurrentNightfallComponent } from './current-nightfall/current-nightfall.component';
+import { PublicMilestonesComponent } from './public-milestones/public-milestones.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BungieService } from './services/bungie.service';
 import { DestinyCacheService } from './services/destiny-cache.service';
 import { ValuesPipe } from './pipes/values.pipe';
 import { ParseService } from './services/parse.service';
+import { HomeComponent } from './home/home.component';
+import { AuthService } from './services/auth.service';
+import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CurrentNightfallComponent,
-    ValuesPipe
+    PublicMilestonesComponent,
+    ValuesPipe,
+    HomeComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +93,7 @@ import { ParseService } from './services/parse.service';
     MatStepperModule,
     HttpClientModule,
   ],
-  providers: [BungieService, DestinyCacheService, ParseService],
+  providers: [BungieService, DestinyCacheService, ParseService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

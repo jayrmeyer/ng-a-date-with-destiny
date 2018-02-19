@@ -1,2 +1,23 @@
-<h1>{{ title }}</h1>
+<div>
+  <mat-toolbar color="primary">
+    <span>{{ title }}</span>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="fill-remaining-space"></span>
+
+    <span>
+      <button mat-button routerLink="" routerLinkActive="active">Home</button>
+      <button mat-button routerLink="publicMilestones" routerLinkActive="active">Milestones</button>
+    </span>
+
+    <button mat-button *ngIf="!loggedIn" matTooltip="Still building out the sign in logic" (click)="onLoginClick()">Sign In</button>
+    <button mat-button *ngIf="loggedIn" [matMenuTriggerFor]="menu">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-button matTooltip="Still building out the sign out logic" (click)="onLogoutClick()">Logout</button>
+    </mat-menu>
+  </mat-toolbar>
+</div>
+
 <router-outlet></router-outlet>

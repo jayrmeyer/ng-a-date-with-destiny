@@ -7,11 +7,11 @@ import { DestinyPublicMilestone, PublicMilestone } from '../models/destiny-publi
 import { ParseService } from '../services/parse.service';
 
 @Component({
-  selector: 'app-current-nightfall',
-  templateUrl: './current-nightfall.component.html',
-  styleUrls: ['./current-nightfall.component.css']
+  selector: 'app-public-milestones',
+  templateUrl: './public-milestones.component.html',
+  styleUrls: ['./public-milestones.component.css']
 })
-export class CurrentNightfallComponent implements OnInit {
+export class PublicMilestonesComponent implements OnInit {
   resp: BungieResponse;
   publicMilestones: DestinyPublicMilestone[];
   milestones: PublicMilestone[];
@@ -38,4 +38,7 @@ export class CurrentNightfallComponent implements OnInit {
       });
   }
 
+  getIcon(icon): string {
+    return 'url(//www.bungie.net' + icon + ')';
+  }
 }

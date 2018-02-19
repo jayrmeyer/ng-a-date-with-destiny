@@ -1,4 +1,4 @@
-import { DestinyDisplayPropertiesDefinition } from './general-models';
+import { DestinyDisplayPropertiesDefinition, DestinyColor } from './general-models';
 
 export class DestinyInventoryItemDefinition {
   displayProperties: DestinyDisplayPropertiesDefinition;
@@ -62,5 +62,121 @@ export class DestinyItemQuantity {
   item: DestinyInventoryItemDefinition;
   itemInstanceId: number;
   quantity: number;
+}
+
+export class DestinyItemActionBlockDefinition {
+
+}
+
+export class DestinyItemInventoryBlockDefinition {
+
+}
+
+export class DestinyItemSetBlockDefinition {
+
+}
+
+export class DestinyItemStatBlockDefinition {
+
+}
+
+export class DestinyEquippingBlockDefinition {
+
+}
+
+export class DestinyItemTranslationBlockDefinition {
+
+}
+
+export class DestinyItemPreviewBlockDefinition {
+
+}
+
+export class DestinyItemQualityBlockDefinition {
+
+}
+
+export class DestinyItemValueBlockDefinition {
+
+}
+
+export class DestinyItemSourceBlockDefinition {
+
+}
+
+export class DestinyItemObjectiveBlockDefinition {
+
+}
+
+export class DestinyItemPlugDefinition {
+
+}
+
+export class DestinyItemGearsetBlockDefinition {
+
+}
+
+export class DestinyItemSackBlockDefinition {
+
+}
+
+export class DestinyItemSocketBlockDefinition {
+
+}
+
+export class DestinyItemSummaryBlockDefinition {
+
+}
+
+export class DestinyItemTalentGridBlockDefinition {
+
+}
+
+export class DestinyItemInvestmentStatDefinition {
+
+}
+
+export class DestinyItemPerkEntryDefinition {
+
+}
+
+export class DestinyLoreDefinition {
+
+}
+
+export class DestinyAnimationReference {
+
+}
+
+export class HyperlinkReference {
+
+}
+
+export class DestinyItemCategoryDefinition {
+
+}
+
+export class SpecialItemType {
+
+}
+
+export class DestinyItemType {
+
+}
+
+export class DestinyItemSubType {
+
+}
+
+export class DestinyClass {
+
+}
+
+export class DestinyDamageTypeDefinition {
+
+}
+
+export class DamageType {
+
 }
 

@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CurrentNightfallComponent } from './current-nightfall/current-nightfall.component';
+import { HomeComponent } from './home/home.component';
+import { PublicMilestonesComponent } from './public-milestones/public-milestones.component';
+import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/currentNightfall', pathMatch: 'full' },
-  { path: 'currentNightfall', component: CurrentNightfallComponent },
-  { path: '**', component: CurrentNightfallComponent }
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent},
+  { path: 'publicMilestones', component: PublicMilestonesComponent },
+  { path: 'auth', component: AuthComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({

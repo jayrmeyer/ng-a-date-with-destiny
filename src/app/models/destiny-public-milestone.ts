@@ -2,6 +2,7 @@ import { DestinyDisplayPropertiesDefinition } from './general-models';
 import { DestinyInventoryItemDefinition, DestinyItemQuantity } from './destiny-item';
 import { DestinyVendorDefinition } from './destiny-vendor';
 import { DestinyActivityDefinition } from './destiny-activity';
+import { DestinyObjectiveDefinition } from './destiny-objective';
 
 // Following set of classes are for the base message with hash values
 // "Usable" classes with descriptions are listed below
@@ -56,7 +57,7 @@ export class PublicMilestone {
   showInExplorer: boolean;
   explorePrioritizesActivityImage: string;
   hasPredictableDates: boolean;
-  quests: DestinyMilestoneQuestDefinition;
+  quests: DestinyMilestoneQuestDefinition[];
   rewards: DestinyMilestoneRewardCategoryDefinition;
   vendorsDisplayTitle: string;
   vendorHashes: number[];
@@ -77,6 +78,7 @@ export class DestinyMilestoneQuestDefinition {
   overrideImage: string;
   questRewards: DestinyMilestoneQuestRewardsDefinition;
   activities: DestinyMilestoneActivityDefinition;
+  challenges: DestinyPublicMilestoneChallengeDefinition;
 }
 
 export class DestinyMilestoneQuestRewardsDefinition {
@@ -132,4 +134,9 @@ export class DestinyMilestoneVendorDefinition {
 export class DestinyMilestoneValueDefinition {
   key: string;
   displayProperties: DestinyDisplayPropertiesDefinition;
+}
+
+export class DestinyPublicMilestoneChallengeDefinition {
+  object: DestinyObjectiveDefinition;
+  activity: DestinyActivityDefinition;
 }

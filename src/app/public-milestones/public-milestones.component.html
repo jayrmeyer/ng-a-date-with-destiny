@@ -1,0 +1,119 @@
+<div *ngIf="milestones">
+  <h1>Current Public Milestones</h1>
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel *ngFor='let milestone of milestones'>
+      <mat-expansion-panel-header>
+
+        <mat-panel-title>
+          <div *ngIf="milestone.quests && milestone.quests.length<2;else usemilestone1">
+            <div *ngFor='let quest of milestone.quests'>
+              {{quest.displayProperties.name}}
+            </div>
+          </div>
+
+          <ng-template #usemilestone1>
+              {{milestone.displayProperties.name}}
+          </ng-template>
+
+        </mat-panel-title>
+
+        <mat-panel-description>
+          <div *ngIf="milestone.quests && milestone.quests.length<2;else usemilestone2">
+              <div *ngFor='let quest of milestone.quests'>
+                {{quest.displayProperties.description}}
+              </div>
+            </div>
+
+            <ng-template #usemilestone2>
+              {{milestone.displayProperties.description}}
+            </ng-template>
+
+        </mat-panel-description>
+
+      </mat-expansion-panel-header>
+
+     <div *ngIf="milestone.quests && milestone.quests.length<2;else usemilestone3">
+        <div *ngFor='let quest of milestone.quests'>
+          <div *ngIf="quest.activities;else usequest">
+            <table width="100%">
+
+              <tr>
+                <td rowspan=2 width="25%">
+                  <div *ngIf="quest.activities.conceptualActivity.pgcrImage">
+                      <img src="http://www.bungie.net{{quest.activities.conceptualActivity.pgcrImage}}" style="max-width: 100%; height: auto">
+                  </div>
+                </td>
+
+                <td width="75%"><b>{{quest.activities.conceptualActivity.displayProperties.name}}</b></td>
+              </tr>
+
+              <tr>
+                <td width="75%">{{quest.activities.conceptualActivity.displayProperties.description}}</td>
+              </tr>
+
+            </table>
+
+            <div *ngIf="quest.activities.conceptualActivity.modifiers">
+              <h2>Modifiers</h2>
+              <ul *ngFor='let modifier of quest.activities.conceptualActivity.modifiers'>
+                <li [ngStyle]="{'list-style-image': getIcon(modifier.displayProperties.icon)}"><b>{{modifier.displayProperties.name}} - </b>{{modifier.displayProperties.description}}</li>
+              </ul>
+            </div>
+
+            <div *ngIf="quest.activities.conceptualActivity.challenges">
+              <h2>Challenges</h2>
+              <ul *ngFor='let challenge of quest.activities.conceptualActivity.challenges'>
+                <div *ngIf="challenge.objective.displayProperties.hasIcon;else usenormalbullet">
+                  <li [ngStyle]="{'list-style-image': getIcon(challenge.objective.displayProperties.icon)}"><b>{{challenge.objective.displayProperties.name}} - </b>{{challenge.objective.displayProperties.description}}</li>
+                </div>
+
+                <ng-template #usenormalbullet>
+                  <li><b>{{challenge.objective.displayProperties.name}} - </b>{{challenge.objective.displayProperties.description}}</li>
+                </ng-template>
+              </ul>
+            </div>
+
+          </div>
+
+          <ng-template #usequest>
+              <table width="100%">
+
+                  <tr>
+                    <td rowspan=2 width="25%">
+                      <div *ngIf="quest.overrideImage">
+                        <img src="http://www.bungie.net{{quest.overrideImage}}" style="max-width: 100%; height: auto">
+                      </div>
+                    </td>
+                    <td width="75%"><b>{{quest.displayProperties.name}}</b></td>
+                  </tr>
+
+                  <tr>
+                    <td width="75%">{{quest.displayProperties.description}}</td>
+                  </tr>
+
+                </table>
+          </ng-template>
+        </div>
+      </div>
+
+      <ng-template #usemilestone3>
+        <table width="100%">
+          <tr>
+
+            <td rowspan=2 width="25%">
+              <div *ngIf="milestone.image">
+                <img src="http://www.bungie.net{{milestone.image}}" style="max-width: 100%; height: auto">
+              </div>
+            </td>
+
+            <td width="75%"><b>{{milestone.displayProperties.name}}</b></td>
+          </tr>
+
+          <tr>
+            <td width="75%">{{milestone.displayProperties.description}}</td>
+          </tr>
+        </table>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
