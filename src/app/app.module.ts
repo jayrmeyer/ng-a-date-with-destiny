@@ -46,6 +46,7 @@ import { ParseService } from './services/parse.service';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './services/auth.service';
 import { AuthComponent } from './auth/auth.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { AuthComponent } from './auth/auth.component';
     PublicMilestonesComponent,
     ValuesPipe,
     HomeComponent,
-    AuthComponent
+    AuthComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,

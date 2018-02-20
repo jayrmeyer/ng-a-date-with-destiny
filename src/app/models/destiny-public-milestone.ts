@@ -6,6 +6,15 @@ import { DestinyObjectiveDefinition } from './destiny-objective';
 
 // Following set of classes are for the base message with hash values
 // "Usable" classes with descriptions are listed below
+export interface PublicMilestoneBungieResponse {
+  Response: DestinyPublicMilestone[];
+  ErrorCode: number;
+  ThrottleSeconds: number;
+  ErrorStatus: string;
+  Message: string;
+  MessageData: string;
+}
+
 export interface DestinyPublicMilestone {
   milestoneHash: number;
   availableQuests: DestinyPublicMilestoneQuest[];

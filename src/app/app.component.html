@@ -15,7 +15,14 @@
       <mat-icon>person</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-button matTooltip="Still building out the sign out logic" (click)="onLogoutClick()">Logout</button>
+      <button mat-menu-item matTooltip="Still building out the sign out logic" (click)="onLogoutClick()">
+        <mat-icon>time_to_leave</mat-icon>
+        <span>Logout</span>
+      </button>
+      <button mat-menu-item routerLink="/bungie_user/{{authInfo.memberId}}">
+        <mat-icon>account_box</mat-icon>
+        <span>Bungie User Info</span>
+      </button>
     </mat-menu>
   </mat-toolbar>
 </div>

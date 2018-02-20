@@ -12,7 +12,7 @@ export class AuthService {
 
   private authManager_: BehaviorSubject<AuthInfo>
     = new BehaviorSubject(new AuthInfo());
-  private authInfo = new AuthInfo();
+  authInfo = new AuthInfo();
   authChange: Observable<AuthInfo>;
   token: Token;
 
@@ -90,6 +90,7 @@ export class AuthService {
     this.token = null;
     localStorage.removeItem('authorization');
     this.setAuthState_(authInfo);
+    window.location.href = '/home';
   }
 
   emitAuthState(): void {
