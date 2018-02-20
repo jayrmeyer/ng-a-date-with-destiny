@@ -4,7 +4,7 @@ import { BungieService } from './services/bungie.service';
 import { OnInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AuthService, AuthState } from './services/auth.service';
+import { AuthService, AuthState, AuthInfo } from './services/auth.service';
 
 
 
@@ -17,14 +17,17 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'A Date With Destiny';
 
   loggedIn = true;
+  authInfo: AuthInfo;
   private authChangeSubscription: Subscription;
 
   constructor(private bungieService: BungieService,
     private destinyCacheService: DestinyCacheService,
     private authService: AuthService) {
 
-      this.authChangeSubscription = authService.authChange.subscribe(newAuthState =>
-        this.loggedIn = (newAuthState === AuthState.LoggedIn));
+      this.authChangeSubscription = authService.authChange.subscribe(newAuthInfo =>{
+        this.loggedIn = newAuthInfo.loggedIn;
+        this.authInfo = newAuthInfo;
+      });
     }
 
   ngOnInit(): void {

@@ -50,12 +50,46 @@ export class AuthService {
     return aToken;
   }
 
+  private static loadTokenFromStorage(): Token {
+    try {
+      const storageToken = localStorage.getItem('authorization');
+      if (storageToken) {
+        return JSON.parse(storageToken);
+      }
+
+    } catch (err) {
+      console.log('error loading token from storage: ' + err);
+      localStorage.removeItem('authorization');
+    }
+  }
+
+  private static isTokenValid(aToken: Token): boolean {
+    const now: number = new Date().getTime();
+    if (now < aToken.expiration) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   login(): void {
-    this.setAuthState_(AuthState.LoggedIn);
+    this.token = AuthService.loadTokenFromStorage();
+    if (this.token) {
+      const authInfo = new AuthInfo();
+      authInfo.loggedIn = true;
+      authInfo.memberId = this.token.membership_id;
+      authInfo.header = 'Bearer ' + this.token.access_token;
+      this.setAuthState_(authInfo);
+    } else {
+      AuthService.rerouteToAuthPage();
+    }
   }
 
   logout(): void {
-    this.setAuthState_(AuthState.LoggedOut);
+    const authInfo = new AuthInfo();
+    this.token = null;
+    localStorage.removeItem('authorization');
+    this.setAuthState_(authInfo);
   }
 
   emitAuthState(): void {
@@ -85,6 +119,11 @@ export class AuthService {
         { headers }).pipe(
           tap((res) => {
             this.storeToken(<Token>res, true);
+            const authInfo = new AuthInfo();
+            authInfo.loggedIn = true;
+            authInfo.memberId = this.token.membership_id;
+            authInfo.header = 'Bearer ' + this.token.access_token;
+            this.setAuthState_(authInfo);
           })
         );
   }

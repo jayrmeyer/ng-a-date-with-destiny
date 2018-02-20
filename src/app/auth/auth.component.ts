@@ -12,7 +12,7 @@ export class AuthComponent implements OnInit {
 
   msg: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, authService: AuthService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
     const code = this.route.snapshot.paramMap.get('code');
@@ -20,13 +20,14 @@ export class AuthComponent implements OnInit {
 
     this.msg = 'Authenticating with Bungie';
     if (code) {
-      this.msg = 'Success!';
-
-      if (true) {
-        this.router.navigate(['/home']);
-      }
-
+      this.authService.getTokenFromBungie(code, state).subscribe(
+        (res) => {
+          this.msg = 'Success!';
+          this.router.navigate(['/home']);
+        },
+        (err) => {
+          this.msg = JSON.stringify(err);
+        });
     }
   }
-
 }
