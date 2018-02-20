@@ -23,13 +23,6 @@ export class PublicMilestonesComponent implements OnInit {
     this.getPublicMilestones();
   }
 
-  getNightfall(): void {
-    this.bungieService.getNightfall()
-       .subscribe(response => {
-         this.resp = response;
-      });
-  }
-
   getPublicMilestones(): void {
     this.bungieService.getPublicMilestones()
       .subscribe(response => {

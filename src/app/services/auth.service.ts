@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { publishBehavior } from 'rxjs/operators';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
@@ -103,6 +103,7 @@ export class AuthService {
 
   public getTokenFromBungie(code: string, state: string): Observable<Token> {
     const loginCheckString = localStorage.getItem('loginCheckString');
+    console.log('getting token from bungie');
     if (loginCheckString) {
       if (loginCheckString !== state) {
         localStorage.removeItem('loginCheckString');
@@ -110,20 +111,27 @@ export class AuthService {
       }
     }
 
-    const headers = new HttpHeaders().set('X-API-Key', environment.bungie.apiKey);
+    const headers = new HttpHeaders({
+      'X-API-Key': environment.bungie.apiKey,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
 
-    return this.http.post<Token>(environment.bungie.apiUrl + 'App/OAuth/Token/', {
-        client_id: environment.bungie.clientId,
-        grant_type: 'authorization_code',
-        code: code},
-        { headers }).pipe(
+    const urlContent = 'client_id=' + environment.bungie.clientId + '&grant_type=authorization_code&code=' + code;
+    return this.http.post<Token>(environment.bungie.apiUrl + 'App/OAuth/Token/', urlContent,
+        { headers: headers }).pipe(
           tap((res) => {
+            console.log('retrieved token response from bungie');
+            console.log(res);
             this.storeToken(<Token>res, true);
             const authInfo = new AuthInfo();
             authInfo.loggedIn = true;
             authInfo.memberId = this.token.membership_id;
             authInfo.header = 'Bearer ' + this.token.access_token;
             this.setAuthState_(authInfo);
+          },
+          (err) => {
+            console.error('error getting token from bungie');
+            console.log(err);
           })
         );
   }

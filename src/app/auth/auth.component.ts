@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 
@@ -15,8 +15,12 @@ export class AuthComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
-    const code = this.route.snapshot.paramMap.get('code');
-    const state: string = this.route.snapshot.paramMap.get('state');
+    let code = '';
+    let state = '';
+    this.route.queryParams.forEach((params: Params) => {
+      code = params['code'];
+      state = params['state'];
+    });
 
     this.msg = 'Authenticating with Bungie';
     if (code) {
@@ -27,6 +31,7 @@ export class AuthComponent implements OnInit {
         },
         (err) => {
           this.msg = JSON.stringify(err);
+          console.log(err);
         });
     }
   }

@@ -9,28 +9,14 @@ import { Nightfall, BungieResponse } from '../models/nightfall';
 
 import { environment } from '../../environments/environment';
 import { DestinyPublicMilestone } from '../models/destiny-public-milestone';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class BungieService {
   res: BungieResponse;
 
-  constructor(private http: HttpClient) { }
-
-  public getNightfall(): Observable<BungieResponse> {
-    const self: BungieService = this;
-
-    const headers = new HttpHeaders().set('X-API-Key', environment.bungie.apiKey);
-
-    console.log('calling bungie');
-    return this.http
-      .get<BungieResponse>(
-        environment.bungie.apiUrl + 'Destiny2/Milestones/',
-        { headers })
-      .pipe(
-          tap (res => { console.log(res); }
-        )
-      );
-  }
+  constructor(private http: HttpClient,
+              private authService: AuthService) { }
 
   public getPublicMilestones(): Observable<BungieResponse> {
     const headers = new HttpHeaders().set('X-API-Key', environment.bungie.apiKey);
