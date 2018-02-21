@@ -23,6 +23,10 @@
         <mat-icon>account_box</mat-icon>
         <span>Bungie User Info</span>
       </button>
+      <button mat-menu-item *ngIf="loggedInUserInfoCard" routerLink="/characters/{{loggedInUserInfoCard.membershipType}}/{{loggedInUserInfoCard.membershipId}}">
+        <mat-icon></mat-icon>
+        <span>List of Characters</span>
+      </button>
     </mat-menu>
   </mat-toolbar>
 </div>

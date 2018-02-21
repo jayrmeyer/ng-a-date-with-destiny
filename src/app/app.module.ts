@@ -47,6 +47,8 @@ import { HomeComponent } from './home/home.component';
 import { AuthService } from './services/auth.service';
 import { AuthComponent } from './auth/auth.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { LoggedInUserService } from './services/logged-in-user.service';
+import { CharactersComponent } from './characters/characters.component';
 
 
 @NgModule({
@@ -56,7 +58,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
     ValuesPipe,
     HomeComponent,
     AuthComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    CharactersComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +98,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
     MatStepperModule,
     HttpClientModule,
   ],
-  providers: [BungieService, DestinyCacheService, ParseService, AuthService],
+  providers: [BungieService, DestinyCacheService, ParseService, AuthService, LoggedInUserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

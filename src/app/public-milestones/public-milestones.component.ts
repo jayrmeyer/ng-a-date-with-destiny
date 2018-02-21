@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BungieService } from '../services/bungie.service';
 import { Observable } from 'rxjs/Observable';
-import { BungieResponse } from '../models/nightfall';
-import '../models/destiny-public-milestone';
-import { DestinyPublicMilestone, PublicMilestone } from '../models/destiny-public-milestone';
+import { PublicMilestoneBungieResponse, DestinyPublicMilestone, PublicMilestone } from '../models/destiny-public-milestone';
 import { ParseService } from '../services/parse.service';
 
 @Component({
@@ -12,7 +10,7 @@ import { ParseService } from '../services/parse.service';
   styleUrls: ['./public-milestones.component.css']
 })
 export class PublicMilestonesComponent implements OnInit {
-  resp: BungieResponse;
+  resp: PublicMilestoneBungieResponse;
   publicMilestones: DestinyPublicMilestone[];
   milestones: PublicMilestone[];
 

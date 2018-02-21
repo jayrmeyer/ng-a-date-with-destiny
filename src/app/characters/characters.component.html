@@ -1,0 +1,14 @@
+<div *ngIf="characters">
+  <mat-grid-list cols="3" rowHeight="100%">
+    <mat-grid-tile *ngFor='let character of characters'>
+      <mat-card>
+        <mat-card-header>
+          {{character.characterId}}
+        </mat-card-header>
+        <mat-card-content>
+          {{character.dateLastPlayed}}
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

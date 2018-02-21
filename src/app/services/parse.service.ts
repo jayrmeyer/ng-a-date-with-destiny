@@ -6,7 +6,10 @@ import { DestinyPublicMilestone,
          PublicMilestone,
          DestinyMilestoneQuestDefinition,
          DestinyMilestoneActivityDefinition } from '../models/destiny-public-milestone';
-import { DestinyActivityDefinition, DestinyActivityModifierDefinition, DestinyActivityChallengeDefinition } from '../models/destiny-activity';
+import { DestinyActivityDefinition,
+         DestinyActivityModifierDefinition,
+         DestinyActivityChallengeDefinition } from '../models/destiny-activity';
+import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent, DestinyCharacterComponent } from '../models/destiny-user';
 import { DestinyObjectiveDefinition } from '../models/destiny-objective';
 
 const CONTENT_BASE_URL = 'http://www.bungie.net/';
@@ -192,5 +195,20 @@ export class ParseService {
     activity.conceptualActivity.isPlaylist = cacheActivity.isPlaylist;
 
     return activity;
+  }
+
+  public parseDestinyCharacterComponent(
+         unparsedCharacters: DictionaryComponentResponseOfint64AndDestinyCharacterComponent):
+         DestinyCharacterComponent[] {
+    const returnArr: DestinyCharacterComponent[] = [];
+
+    Object.keys(unparsedCharacters).forEach((key: any) => {
+      const character = new DestinyCharacterComponent;
+      Object.assign(character, unparsedCharacters[key].data);
+
+      returnArr.push(character);
+    });
+
+    return returnArr;
   }
 }

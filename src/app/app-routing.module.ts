@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { PublicMilestonesComponent } from './public-milestones/public-milestones.component';
 import { AuthComponent } from './auth/auth.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { CharactersComponent } from './characters/characters.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'publicMilestones', component: PublicMilestonesComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'bungie_user/:memberId', component: UserInfoComponent},
+  { path: 'characters/:membershipType/:memberId', component: CharactersComponent},
   { path: '**', component: HomeComponent }
 ];
 
