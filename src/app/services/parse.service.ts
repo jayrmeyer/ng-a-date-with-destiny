@@ -202,10 +202,17 @@ export class ParseService {
          DestinyCharacterComponent[] {
     const returnArr: DestinyCharacterComponent[] = [];
 
-    Object.keys(unparsedCharacters).forEach((key: any) => {
+    Object.keys(unparsedCharacters.data).forEach((key: any) => {
       const character = new DestinyCharacterComponent;
-      Object.assign(character, unparsedCharacters[key].data);
+      Object.assign(character, unparsedCharacters.data[key]);
 
+      character.class = this.destinyCacheService.cache.Class[character.classHash];
+      character.gender = this.destinyCacheService.cache.Gender[character.genderHash];
+      character.race = this.destinyCacheService.cache.Race[character.raceHash];
+      character.emblem = this.destinyCacheService.cache.InventoryItem[character.emblemHash];
+
+      console.log('pushing...');
+      console.log(character);
       returnArr.push(character);
     });
 

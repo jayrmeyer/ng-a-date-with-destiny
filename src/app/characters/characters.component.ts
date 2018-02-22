@@ -13,7 +13,7 @@ import { DestinyComponentType } from '../models/general-models';
   styleUrls: ['./characters.component.css']
 })
 export class CharactersComponent implements OnInit {
-  @Input() characters: DestinyCharacterComponent;
+  @Input() characters: DestinyCharacterComponent[];
 
   constructor(private route: ActivatedRoute,
               private bungieService: BungieService,
@@ -29,7 +29,8 @@ export class CharactersComponent implements OnInit {
     const memberType = this.route.snapshot.paramMap.get('membershipType');
 
     this.bungieService.getProfile(memberId, +memberType, DestinyComponentType.Characters).subscribe((res) => {
-      this.characters = res.Response.characters.data;
+      this.characters = this.parseService.parseDestinyCharacterComponent(res.Response.characters);
+      console.log(this.characters);
     });
   }
 

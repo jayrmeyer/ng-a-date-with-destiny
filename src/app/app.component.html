@@ -1,34 +1,36 @@
-<div>
-  <mat-toolbar color="primary">
-    <span>{{ title }}</span>
+<body class="mat-app-background">
+  <div class="adwd-toolbar-theme">
+    <mat-toolbar color="primary">
+      <span>{{ title }}</span>
 
-    <!-- This fills the remaining space of the current row -->
-    <span class="fill-remaining-space"></span>
+      <!-- This fills the remaining space of the current row -->
+      <span class="fill-remaining-space"></span>
 
-    <span>
-      <button mat-button routerLink="" routerLinkActive="active">Home</button>
-      <button mat-button routerLink="publicMilestones" routerLinkActive="active">Milestones</button>
-    </span>
+      <span>
+        <button mat-button routerLink="" routerLinkActive="active">Home</button>
+        <button mat-button routerLink="publicMilestones" routerLinkActive="active">Milestones</button>
+      </span>
 
-    <button mat-button *ngIf="!loggedIn" matTooltip="Still building out the sign in logic" (click)="onLoginClick()">Sign In</button>
-    <button mat-button *ngIf="loggedIn" [matMenuTriggerFor]="menu">
-      <mat-icon>person</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item matTooltip="Still building out the sign out logic" (click)="onLogoutClick()">
-        <mat-icon>time_to_leave</mat-icon>
-        <span>Logout</span>
+      <button mat-button class="sign-in-button" *ngIf="!loggedIn" matTooltip="Still building out the sign in logic" (click)="onLoginClick()">Sign In</button>
+      <button mat-button *ngIf="loggedIn" [matMenuTriggerFor]="menu">
+        <mat-icon>person</mat-icon>
       </button>
-      <button mat-menu-item routerLink="/bungie_user/{{authInfo.memberId}}">
-        <mat-icon>account_box</mat-icon>
-        <span>Bungie User Info</span>
-      </button>
-      <button mat-menu-item *ngIf="loggedInUserInfoCard" routerLink="/characters/{{loggedInUserInfoCard.membershipType}}/{{loggedInUserInfoCard.membershipId}}">
-        <mat-icon></mat-icon>
-        <span>List of Characters</span>
-      </button>
-    </mat-menu>
-  </mat-toolbar>
-</div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item matTooltip="Still building out the sign out logic" (click)="onLogoutClick()">
+          <mat-icon>time_to_leave</mat-icon>
+          <span>Logout</span>
+        </button>
+        <button mat-menu-item routerLink="/bungie_user/{{authInfo.memberId}}">
+          <mat-icon>account_box</mat-icon>
+          <span>Bungie User Info</span>
+        </button>
+        <button mat-menu-item *ngIf="loggedInUserInfoCard" routerLink="/characters/{{loggedInUserInfoCard.membershipType}}/{{loggedInUserInfoCard.membershipId}}">
+          <mat-icon>people</mat-icon>
+          <span>List of Characters</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+  </div>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</body>
