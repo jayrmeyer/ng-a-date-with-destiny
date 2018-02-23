@@ -4,10 +4,16 @@
       <mat-grid-tile *ngFor='let character of characters'>
         <mat-card>
           <mat-card-header>
-            <img src="https://www.bungie.net{{character.emblemBackgroundPath}}">
+            <div mat-card-avatar *ngIf="character.emblem.displayProperties.hasIcon">
+              <img height="40" width="40" src="https://www.bungie.net{{character.emblem.displayProperties.icon}}">
+            </div>
+            <mat-card-title>{{character.class.displayProperties.name}}</mat-card-title>
+            <mat-card-subtitle>
+              Level: {{character.baseCharacterLevel}} Light: {{character.light}}
+            </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            {{character.dateLastPlayed}}
+            Last played: {{character.dateLastPlayed | date:'medium'}}
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>

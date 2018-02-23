@@ -60,13 +60,13 @@ export class BungieService {
       );
   }
 
-  public getProfile(id: string, memberType: number, componentType: number): Observable<ProfileBungieResponse> {
+  public getProfile(id: string, memberType: number, componentTypes: number[]): Observable<ProfileBungieResponse> {
     const headers = new HttpHeaders({
       'X-API-Key': environment.bungie.apiKey //,
       // 'Authorization': this.authService.authInfo.header
     });
     const options = {
-      params: new HttpParams().set('components', componentType.toString()),
+      params: new HttpParams().set('components', componentTypes.toString()),
       headers: headers
     };
 

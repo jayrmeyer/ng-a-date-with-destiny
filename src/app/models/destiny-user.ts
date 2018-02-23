@@ -1,6 +1,9 @@
 import { DestinyInventoryItemDefinition, DestinyItemQuantity } from './destiny-item';
 import { DestinyColor, DestinyDisplayPropertiesDefinition } from './general-models';
 import { DestinyVendorDefinition, DestinyFactionVendorDefinition } from './destiny-vendor';
+import { Milestone } from './destiny-public-milestone';
+import { DestinyObjectiveDefinition } from './destiny-objective';
+import { DestinyDestinationDefinition, DestinyActivityDefinition } from './destiny-activity';
 
 // Following set of classes are for the base message with hash values
 // "Usable" classes with descriptions are listed below
@@ -83,7 +86,7 @@ export interface DestinyProfileResponse {
   // profileKiosks: SingleComponentResponseOfDestinyKiosksComponent;
   characters: DictionaryComponentResponseOfint64AndDestinyCharacterComponent;
   // characterInventories: DictionaryComponentResponseOfint64AndDestinyInventoryComponent;
-  // characterProgressions: DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent;
+  characterProgressions: DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent;
   // characterRenderData: DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent;
   // characterActivities: DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent;
   // characterEquipment: DictionaryComponentResponseOfint645AndDestinyInventoryComponent;
@@ -208,4 +211,61 @@ export class UserInfoCard {
   membershipType: number;
   membershipId: number;
   displayName: string;
+}
+
+export interface DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent {
+  data: DestinyCharacterProgressionComponent;
+  privacy: number;
+}
+
+export class DestinyCharacterProgressionComponent {
+  progressions: DestinyProgression;
+  factions: DestinyFactionProgression;
+  milestones: Milestone;
+  quests: DestinyQuestStatus;
+  uninstancedItemObjectives: DestinyInventoryItemDefinition[];
+}
+
+export class DestinyFactionProgression {
+  factionHash: number;
+  faction: DestinyFactionDefinition;
+  factionVendorIndex: number;
+  progressionHash: number;
+  progression: DestinyProgressionDefinition;
+  dailyProgress: number;
+  dailyLimit: number;
+  weeklyProgress: number;
+  weeklyLimit: number;
+  currentProgress: number;
+  level: number;
+  levelCap: number;
+  stepIndex: number;
+  progressToNextLevel: number;
+  nextLevelAt: number;
+}
+
+export class DestinyQuestStatus {
+  questHash: number;
+  quest: DestinyInventoryItemDefinition;
+  stepHash: number;
+  step: DestinyInventoryItemDefinition;
+  stepObjectives: DestinyObjectiveProgress[];
+  tracked: boolean;
+  itemInstanceId: number;
+  completed: boolean;
+  redeemed: boolean;
+  started: boolean;
+  vendorHash: number;
+  vendor: DestinyVendorDefinition;
+}
+
+export class DestinyObjectiveProgress {
+  objectiveHash: number;
+  objective: DestinyObjectiveDefinition;
+  destinationHash: number;
+  destination: DestinyDestinationDefinition;
+  activityHash: number;
+  activity: DestinyActivityDefinition;
+  progress: number;
+  complete: boolean;
 }

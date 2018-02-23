@@ -56,7 +56,7 @@ export interface DestinyPublicMilestoneChallenge {
 }
 
 // Following are the "Usable" classes
-export class PublicMilestone {
+export class Milestone {
   milestoneHash: number;
   displayProperties: DestinyDisplayPropertiesDefinition;
   image: string;
@@ -148,4 +148,15 @@ export class DestinyMilestoneValueDefinition {
 export class DestinyPublicMilestoneChallengeDefinition {
   object: DestinyObjectiveDefinition;
   activity: DestinyActivityDefinition;
+}
+
+export class DestinyMilestone {
+  milestoneHash;
+  milestone DestinyMilestoneDefintion;
+  availableQuests: DestinyMilestoneQuest[];
+  values: number;
+  vendors: DestinyMilestoneVendor[];
+  rewards: DestinyMilestoneRewardCategory[];
+  startDate: Date;
+  endDate: Date;
 }

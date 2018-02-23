@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BungieService } from '../services/bungie.service';
 import { AuthService } from '../services/auth.service';
 import { ParseService } from '../services/parse.service';
-import { DestinyCharacterComponent } from '../models/destiny-user';
+import { DestinyCharacterComponent, DestinyProgressionDefinition, DestinyCharacterProgressionComponent } from '../models/destiny-user';
 import { DestinyComponentType } from '../models/general-models';
 
 @Component({
@@ -14,6 +14,7 @@ import { DestinyComponentType } from '../models/general-models';
 })
 export class CharactersComponent implements OnInit {
   @Input() characters: DestinyCharacterComponent[];
+  @Input() progressions: DestinyCharacterProgressionComponent[];
 
   constructor(private route: ActivatedRoute,
               private bungieService: BungieService,
@@ -21,15 +22,17 @@ export class CharactersComponent implements OnInit {
               private parseService: ParseService) { }
 
   ngOnInit() {
-    this.getCharacters();
+    this.getCharactersAndProgressions();
   }
 
-  getCharacters(): void {
+  getCharactersAndProgressions(): void {
     const memberId = this.route.snapshot.paramMap.get('memberId');
     const memberType = this.route.snapshot.paramMap.get('membershipType');
+    const componentTypes = [DestinyComponentType.Characters, DestinyComponentType.CharacterProgressions];
 
-    this.bungieService.getProfile(memberId, +memberType, DestinyComponentType.Characters).subscribe((res) => {
+    this.bungieService.getProfile(memberId, +memberType, componentTypes).subscribe((res) => {
       this.characters = this.parseService.parseDestinyCharacterComponent(res.Response.characters);
+      this.progressions = this.parseService.parseDestinyCharacterProgressionComponent(res.Response.characterProgressions);
       console.log(this.characters);
     });
   }

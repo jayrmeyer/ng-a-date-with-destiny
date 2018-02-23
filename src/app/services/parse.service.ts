@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { DestinyCacheService } from './destiny-cache.service';
 import '../models/destiny-public-milestone';
 import { DestinyPublicMilestone,
-         PublicMilestone,
+         Milestone,
          DestinyMilestoneQuestDefinition,
          DestinyMilestoneActivityDefinition } from '../models/destiny-public-milestone';
 import { DestinyActivityDefinition,
          DestinyActivityModifierDefinition,
          DestinyActivityChallengeDefinition } from '../models/destiny-activity';
-import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent, DestinyCharacterComponent } from '../models/destiny-user';
+import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent, DestinyCharacterComponent, DestinyCharacterProgressionComponent } from '../models/destiny-user';
 import { DestinyObjectiveDefinition } from '../models/destiny-objective';
 
 const CONTENT_BASE_URL = 'http://www.bungie.net/';
@@ -19,13 +19,13 @@ export class ParseService {
 
   constructor(private destinyCacheService: DestinyCacheService) { }
 
-  public parseMilestones(unparsedMilestones: DestinyPublicMilestone[]): PublicMilestone[] {
-    const returnArr: PublicMilestone[] = [];
+  public parseMilestones(unparsedMilestones: DestinyPublicMilestone[]): Milestone[] {
+    const returnArr: Milestone[] = [];
     let populateReturn = true;
     let questsAvailable = true;
 
     Object.keys(unparsedMilestones).forEach((key: any) => {
-      const milestone: PublicMilestone = new PublicMilestone();
+      const milestone: Milestone = new Milestone();
 
       console.log('current milestone key: ' + key);
       console.log('current unparsed milestone is');
@@ -218,4 +218,9 @@ export class ParseService {
 
     return returnArr;
   }
+
+  public parseDestinyCharacterProgressionComponent(unparsedProgressions DictionaryCompoonentResponseOfint64AndDestinyCharacterProgressionComponent):
+    DestinyCharacterProgressionComponent[] {
+    const returnArr:
+    }
 }
