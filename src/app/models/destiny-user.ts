@@ -4,6 +4,7 @@ import { DestinyVendorDefinition, DestinyFactionVendorDefinition } from './desti
 import { Milestone } from './destiny-public-milestone';
 import { DestinyObjectiveDefinition } from './destiny-objective';
 import { DestinyDestinationDefinition, DestinyActivityDefinition } from './destiny-activity';
+import { DestinyCharacterProgressionComponent } from './destiny-character';
 
 // Following set of classes are for the base message with hash values
 // "Usable" classes with descriptions are listed below
@@ -154,56 +155,6 @@ export class DestinyClassDefinition {
   redacted: boolean;
 }
 
-export class DestinyProgression {
-  progressionHash: number;
-  progression: DestinyProgressionDefinition;
-  dailyProgress: number;
-  dailyLimit: number;
-  weeklyProgress: number;
-  weeklyLimit: number;
-  currentProgress: number;
-  level: number;
-  levelCap: number;
-  stepIndex: number;
-  progressToNextLevel: number;
-  nextLevelAt: number;
-}
-
-export class DestinyProgressionDefinition {
-  displayProperties: DestinyDisplayPropertiesDefinition;
-  scope: number;
-  repeatLastStep: boolean;
-  source: string;
-  steps: DestinyProgressionStepDefinition[];
-  visible: boolean;
-  factionHash: number;
-  faction: DestinyFactionDefinition;
-  hash: number;
-  index: number;
-  redacted: boolean;
-}
-
-export class DestinyProgressionStepDefinition {
-  stepName: string;
-  displayEffectType: number;
-  progressTotal: number;
-  rewardItems: DestinyItemQuantity;
-}
-
-export class DestinyFactionDefinition {
-  displayProperties: DestinyDisplayPropertiesDefinition;
-  progressionHash: number;
-  progression: DestinyProgressionDefinition;
-  tokenValues: number;
-  rewardItemHash: number;
-  rewardItem: DestinyInventoryItemDefinition;
-  rewardVendorHash: number;
-  rewardVendor: DestinyVendorDefinition;
-  vendors: DestinyFactionVendorDefinition[];
-  hash: number;
-  index: number;
-  redacted: boolean;
-}
 
 export class UserInfoCard {
   supplementalDisplayName: string;
@@ -216,14 +167,6 @@ export class UserInfoCard {
 export interface DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent {
   data: DestinyCharacterProgressionComponent;
   privacy: number;
-}
-
-export class DestinyCharacterProgressionComponent {
-  progressions: DestinyProgression;
-  factions: DestinyFactionProgression;
-  milestones: Milestone;
-  quests: DestinyQuestStatus;
-  uninstancedItemObjectives: DestinyInventoryItemDefinition[];
 }
 
 export class DestinyFactionProgression {

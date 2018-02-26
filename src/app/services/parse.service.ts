@@ -9,7 +9,10 @@ import { DestinyPublicMilestone,
 import { DestinyActivityDefinition,
          DestinyActivityModifierDefinition,
          DestinyActivityChallengeDefinition } from '../models/destiny-activity';
-import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent, DestinyCharacterComponent, DestinyCharacterProgressionComponent } from '../models/destiny-user';
+import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
+         DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
+         DestinyCharacterComponent,
+         DestinyCharacterProgressionComponent } from '../models/destiny-user';
 import { DestinyObjectiveDefinition } from '../models/destiny-objective';
 
 const CONTENT_BASE_URL = 'http://www.bungie.net/';
@@ -219,8 +222,27 @@ export class ParseService {
     return returnArr;
   }
 
-  public parseDestinyCharacterProgressionComponent(unparsedProgressions DictionaryCompoonentResponseOfint64AndDestinyCharacterProgressionComponent):
-    DestinyCharacterProgressionComponent[] {
-    const returnArr:
+  public parseDestinyCharacterProgressionComponent(
+      unparsedProgressions: DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent):
+      any {
+    const returnArr: DestinyCharacterProgressionComponent[] = [];
+    const returnHash = {};
+
+    Object.keys(unparsedProgressions.data).forEach((key: any) => {
+      const progression = new DestinyCharacterProgressionComponent;
+      // Object.assign(progression, unparsedProgressions.data[key]);
+
+      console.warn(unparsedProgressions.data[key].milestones);
+
+      // milestone available quest status???
+
+      const milestones = this.parseMilestones(unparsedProgressions.data[key].milestones);
+      progression.milestones = milestones;
+      returnArr.push(progression);
+      returnHash[key] = progression;
+    });
+
+    console.log(returnHash);
+    return returnHash;
     }
 }
