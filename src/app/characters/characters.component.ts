@@ -4,8 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { BungieService } from '../services/bungie.service';
 import { AuthService } from '../services/auth.service';
 import { ParseService } from '../services/parse.service';
-import { DestinyCharacterComponent, DestinyProgressionDefinition, DestinyCharacterProgressionComponent } from '../models/destiny-user';
+import { DestinyCharacterComponent } from '../models/destiny-user';
 import { DestinyComponentType } from '../models/general-models';
+import { DestinyProgressionDefinition } from '../models/destiny-definitions';
+import { DestinyCharacterProgressionComponent} from '../models/destiny-character';
 
 @Component({
   selector: 'app-characters',

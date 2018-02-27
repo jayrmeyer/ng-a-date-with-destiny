@@ -3,17 +3,19 @@ import { Injectable } from '@angular/core';
 import { DestinyCacheService } from './destiny-cache.service';
 import '../models/destiny-public-milestone';
 import { DestinyPublicMilestone,
-         Milestone,
-         DestinyMilestoneQuestDefinition,
-         DestinyMilestoneActivityDefinition } from '../models/destiny-public-milestone';
-import { DestinyActivityDefinition,
-         DestinyActivityModifierDefinition,
-         DestinyActivityChallengeDefinition } from '../models/destiny-activity';
+         Milestone } from '../models/destiny-public-milestone';
+import { DestinyCharacterProgressionComponent } from '../models/destiny-character';
 import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
          DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
-         DestinyCharacterComponent,
-         DestinyCharacterProgressionComponent } from '../models/destiny-user';
-import { DestinyObjectiveDefinition } from '../models/destiny-objective';
+         DestinyCharacterComponent} from '../models/destiny-user';
+import { DestinyObjectiveDefinition,
+         DestinyActivityDefinition,
+         DestinyActivityModifierDefinition,
+         DestinyActivityChallengeDefinition,
+         DestinyMilestoneQuestDefinition,
+         DestinyMilestoneActivityDefinition } from '../models/destiny-definitions';
+import { DestinyMilestone } from '../models/destiny-milestones';
+import { DestinyProgression } from '../models/destiny';
 
 const CONTENT_BASE_URL = 'http://www.bungie.net/';
 
@@ -22,17 +24,13 @@ export class ParseService {
 
   constructor(private destinyCacheService: DestinyCacheService) { }
 
-  public parseMilestones(unparsedMilestones: DestinyPublicMilestone[]): Milestone[] {
+  public parsePublicMilestones(unparsedMilestones: DestinyPublicMilestone[]): Milestone[] {
     const returnArr: Milestone[] = [];
     let populateReturn = true;
     let questsAvailable = true;
 
     Object.keys(unparsedMilestones).forEach((key: any) => {
       const milestone: Milestone = new Milestone();
-
-      console.log('current milestone key: ' + key);
-      console.log('current unparsed milestone is');
-      console.log(unparsedMilestones[key]);
 
       const unparsedQuests = unparsedMilestones[key].availableQuests;
       if (!unparsedQuests) {
@@ -48,9 +46,6 @@ export class ParseService {
 
       // check to see if we can find the milestone in the cache; if not log an error to the console
       if (cacheMilestone) {
-        console.log('cache for current milestone is');
-        console.log(cacheMilestone);
-
         // find display properties
         if (cacheMilestone.displayProperties) {
           milestone.displayProperties = cacheMilestone.displayProperties;
@@ -98,8 +93,6 @@ export class ParseService {
 
             const unparsedActivity = unparsedQuests[questKey].activity;
             if (unparsedActivity) {
-              console.log('looking up activity for ' + unparsedActivity.activityHash);
-              console.log(this.destinyCacheService.cache.Activity[unparsedActivity.activityHash]);
               quest.activities = this.parseActivity(unparsedActivity);
             }
 
@@ -115,8 +108,6 @@ export class ParseService {
       }
     });
 
-    console.log('return array follows');
-    console.log(returnArr);
     return returnArr;
   }
 
@@ -125,7 +116,7 @@ export class ParseService {
     const cacheActivity = this.destinyCacheService.cache.Activity[unparsedActivity.activityHash];
 
     activity.conceptualActivityHash = cacheActivity.hash;
-    activity.conceptualActivity = new DestinyActivityDefinition;
+    activity.conceptualActivity = new DestinyActivityDefinition();
     activity.conceptualActivity.displayProperties = cacheActivity.displayProperties;
     activity.conceptualActivity.index = cacheActivity.index;
     activity.conceptualActivity.activityTypeHash = cacheActivity.activityTypeHash;
@@ -137,15 +128,11 @@ export class ParseService {
     // activity.conceptualActivity.challenges
 
     const unparsedChallenges = cacheActivity.challenges;
-    console.log('unparsed challenges');
-    console.log(unparsedChallenges);
     if (unparsedChallenges) {
       activity.conceptualActivity.challenges = [];
       for (let  i = 0; i < unparsedChallenges.length; i++) {
         const challenge = new DestinyActivityChallengeDefinition();
         const cacheChalllenge = this.destinyCacheService.cache.Objective[unparsedChallenges[i].objectiveHash];
-        console.log('cache challenge is');
-        console.log(cacheChalllenge);
         challenge.objective = new DestinyObjectiveDefinition();
 
         challenge.objective.hash = unparsedChallenges[i].objectiveHash;
@@ -214,8 +201,6 @@ export class ParseService {
       character.race = this.destinyCacheService.cache.Race[character.raceHash];
       character.emblem = this.destinyCacheService.cache.InventoryItem[character.emblemHash];
 
-      console.log('pushing...');
-      console.log(character);
       returnArr.push(character);
     });
 
@@ -225,12 +210,10 @@ export class ParseService {
   public parseDestinyCharacterProgressionComponent(
       unparsedProgressions: DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent):
       any {
-    const returnArr: DestinyCharacterProgressionComponent[] = [];
     const returnHash = {};
 
     Object.keys(unparsedProgressions.data).forEach((key: any) => {
       const progression = new DestinyCharacterProgressionComponent;
-      // Object.assign(progression, unparsedProgressions.data[key]);
 
       console.warn(unparsedProgressions.data[key].milestones);
 
@@ -238,11 +221,34 @@ export class ParseService {
 
       const milestones = this.parseMilestones(unparsedProgressions.data[key].milestones);
       progression.milestones = milestones;
-      returnArr.push(progression);
+      const progressions = this.parseDestinyProgressions(unparsedProgressions.data[key].progressions);
+      progression.progressions = progressions;
       returnHash[key] = progression;
     });
 
     console.log(returnHash);
     return returnHash;
+    }
+
+    public parseMilestones(unparsedMilestones: DestinyMilestone): DestinyMilestone[] {
+      const returnArr: DestinyMilestone[] = [];
+
+      Object.keys(unparsedMilestones).forEach((key: any) => {
+        returnArr.push(unparsedMilestones[key]);
+      });
+
+      return returnArr;
+    }
+
+    public parseDestinyProgressions(unparsedProgressions: DestinyProgression): DestinyProgression[] {
+      const returnArr: DestinyProgression[] = [];
+
+      Object.keys(unparsedProgressions).forEach((key: any) => {
+        const destinyProgression: DestinyProgression = unparsedProgressions[key];
+        destinyProgression.progression = this.destinyCacheService.cache.Progression[key];
+        returnArr.push(destinyProgression);
+      });
+
+      return returnArr;
     }
 }

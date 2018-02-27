@@ -1,9 +1,16 @@
-import { DestinyInventoryItemDefinition, DestinyItemQuantity } from './destiny-item';
-import { DestinyColor, DestinyDisplayPropertiesDefinition } from './general-models';
-import { DestinyVendorDefinition, DestinyFactionVendorDefinition } from './destiny-vendor';
+import { DestinyItemQuantity,
+         DestinyProgression } from './destiny';
+import { DestinyColor } from './general-models';
+import { DestinyVendorDefinition,
+         DestinyFactionVendorDefinition,
+         DestinyDestinationDefinition,
+         DestinyActivityDefinition,
+         DestinyDisplayPropertiesDefinition,
+         DestinyInventoryItemDefinition,
+         DestinyObjectiveDefinition,
+         DestinyFactionDefinition,
+         DestinyProgressionDefinition } from './destiny-definitions';
 import { Milestone } from './destiny-public-milestone';
-import { DestinyObjectiveDefinition } from './destiny-objective';
-import { DestinyDestinationDefinition, DestinyActivityDefinition } from './destiny-activity';
 import { DestinyCharacterProgressionComponent } from './destiny-character';
 
 // Following set of classes are for the base message with hash values
@@ -185,30 +192,4 @@ export class DestinyFactionProgression {
   stepIndex: number;
   progressToNextLevel: number;
   nextLevelAt: number;
-}
-
-export class DestinyQuestStatus {
-  questHash: number;
-  quest: DestinyInventoryItemDefinition;
-  stepHash: number;
-  step: DestinyInventoryItemDefinition;
-  stepObjectives: DestinyObjectiveProgress[];
-  tracked: boolean;
-  itemInstanceId: number;
-  completed: boolean;
-  redeemed: boolean;
-  started: boolean;
-  vendorHash: number;
-  vendor: DestinyVendorDefinition;
-}
-
-export class DestinyObjectiveProgress {
-  objectiveHash: number;
-  objective: DestinyObjectiveDefinition;
-  destinationHash: number;
-  destination: DestinyDestinationDefinition;
-  activityHash: number;
-  activity: DestinyActivityDefinition;
-  progress: number;
-  complete: boolean;
 }

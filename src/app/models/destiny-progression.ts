@@ -1,7 +1,9 @@
-import { DestinyProgressionDefinition,
-         DestinyInventoryItemDefinition } from './destiny-definitions';
+import { DestinyFactionDefinition, DestinyProgressionDefinition } from './destiny-definitions';
 
-export class DestinyProgression {
+export class DestinyFactionProgression {
+  factionHash: number;
+  faction: DestinyFactionDefinition;
+  factionVendorIndex: number;
   progressionHash: number;
   progression: DestinyProgressionDefinition;
   dailyProgress: number;
@@ -14,11 +16,4 @@ export class DestinyProgression {
   stepIndex: number;
   progressToNextLevel: number;
   nextLevelAt: number;
-}
-
-export class DestinyItemQuantity {
-  itemHash: number;
-  item: DestinyInventoryItemDefinition;
-  itemInstanceId: number;
-  quantity: number;
 }
