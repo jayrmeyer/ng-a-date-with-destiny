@@ -442,3 +442,30 @@ export class DestinyPublicMilestoneChallengeDefinition {
 export class DestinyMilestoneDefinition {
 
 }
+
+export class DestinyRaceDefinition {
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  raceType: number;
+  genderedRaceNames: number;
+  hash: number;
+  index: number;
+  redacted: boolean;
+}
+
+export class DestinyGenderDefinition {
+  genderType: number;
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  hash: number;
+  index: number;
+  redacted: boolean;
+}
+
+export class DestinyClassDefinition {
+  classType: number;
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  genderedClassNames: number;
+  mentorVendorHash: number;
+  hash: number;
+  index: number;
+  redacted: boolean;
+}

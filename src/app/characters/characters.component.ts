@@ -8,6 +8,7 @@ import { DestinyCharacterComponent } from '../models/destiny-user';
 import { DestinyComponentType } from '../models/general-models';
 import { DestinyProgressionDefinition } from '../models/destiny-definitions';
 import { DestinyCharacterProgressionComponent} from '../models/destiny-character';
+import { ADWDCharacter, ADWDCharacterAndProgression } from '../models/adwd-models';
 
 @Component({
   selector: 'app-characters',
@@ -15,8 +16,9 @@ import { DestinyCharacterProgressionComponent} from '../models/destiny-character
   styleUrls: ['./characters.component.css']
 })
 export class CharactersComponent implements OnInit {
-  @Input() characters: DestinyCharacterComponent[];
-  @Input() progressions: DestinyCharacterProgressionComponent[];
+  @Input() characters: ADWDCharacterAndProgression[];
+  // @Input() characters: DestinyCharacterComponent[];
+  // @Input() progressions: DestinyCharacterProgressionComponent[];
 
   constructor(private route: ActivatedRoute,
               private bungieService: BungieService,
@@ -33,8 +35,8 @@ export class CharactersComponent implements OnInit {
     const componentTypes = [DestinyComponentType.Characters, DestinyComponentType.CharacterProgressions];
 
     this.bungieService.getProfile(memberId, +memberType, componentTypes).subscribe((res) => {
-      this.characters = this.parseService.parseDestinyCharacterComponent(res.Response.characters);
-      this.progressions = this.parseService.parseDestinyCharacterProgressionComponent(res.Response.characterProgressions);
+      this.characters = <ADWDCharacterAndProgression[]>this.parseService.parseDestinyCharacterComponent(res.Response.characters);
+      this.characters = this.parseService.parseDestinyCharacterProgressionComponent(res.Response.characterProgressions, this.characters);
       console.log(this.characters);
     });
   }

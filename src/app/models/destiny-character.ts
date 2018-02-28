@@ -7,7 +7,7 @@ import { DestinyQuestStatus } from './destiny-quests';
 export class DestinyCharacterProgressionComponent {
   progressions: DestinyProgression;
   factions: DestinyFactionProgression;
-  milestones: DestinyMilestone[];
+  milestones: DestinyMilestone;
   quests: DestinyQuestStatus[];
   uninstancedItemObjectives: DestinyInventoryItemDefinition[];
 }

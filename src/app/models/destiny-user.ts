@@ -9,7 +9,10 @@ import { DestinyVendorDefinition,
          DestinyInventoryItemDefinition,
          DestinyObjectiveDefinition,
          DestinyFactionDefinition,
-         DestinyProgressionDefinition } from './destiny-definitions';
+         DestinyProgressionDefinition,
+         DestinyRaceDefinition,
+         DestinyClassDefinition,
+         DestinyGenderDefinition } from './destiny-definitions';
 import { Milestone } from './destiny-public-milestone';
 import { DestinyCharacterProgressionComponent } from './destiny-character';
 
@@ -135,32 +138,6 @@ export class DestinyCharacterComponent {
   percentToNextLevel: number;
 }
 
-export class DestinyRaceDefinition {
-  displayProperties: DestinyDisplayPropertiesDefinition;
-  raceType: number;
-  genderedRaceNames: number;
-  hash: number;
-  index: number;
-  redacted: boolean;
-}
-
-export class DestinyGenderDefinition {
-  genderType: number;
-  displayProperties: DestinyDisplayPropertiesDefinition;
-  hash: number;
-  index: number;
-  redacted: boolean;
-}
-
-export class DestinyClassDefinition {
-  classType: number;
-  displayProperties: DestinyDisplayPropertiesDefinition;
-  genderedClassNames: number;
-  mentorVendorHash: number;
-  hash: number;
-  index: number;
-  redacted: boolean;
-}
 
 
 export class UserInfoCard {

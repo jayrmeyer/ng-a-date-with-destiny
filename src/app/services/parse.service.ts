@@ -16,6 +16,7 @@ import { DestinyObjectiveDefinition,
          DestinyMilestoneActivityDefinition } from '../models/destiny-definitions';
 import { DestinyMilestone } from '../models/destiny-milestones';
 import { DestinyProgression } from '../models/destiny';
+import { ADWDCharacter, ADWDCharacterAndProgression } from '../models/adwd-models';
 
 const CONTENT_BASE_URL = 'http://www.bungie.net/';
 
@@ -189,16 +190,16 @@ export class ParseService {
 
   public parseDestinyCharacterComponent(
          unparsedCharacters: DictionaryComponentResponseOfint64AndDestinyCharacterComponent):
-         DestinyCharacterComponent[] {
-    const returnArr: DestinyCharacterComponent[] = [];
+         ADWDCharacter[] {
+    const returnArr: ADWDCharacter[] = [];
 
     Object.keys(unparsedCharacters.data).forEach((key: any) => {
-      const character = new DestinyCharacterComponent;
+      const character = new ADWDCharacter();
       Object.assign(character, unparsedCharacters.data[key]);
 
-      character.class = this.destinyCacheService.cache.Class[character.classHash];
-      character.gender = this.destinyCacheService.cache.Gender[character.genderHash];
-      character.race = this.destinyCacheService.cache.Race[character.raceHash];
+      character.class = this.destinyCacheService.cache.Class[unparsedCharacters.data[key].classHash];
+      character.gender = this.destinyCacheService.cache.Gender[unparsedCharacters.data[key].genderHash];
+      character.race = this.destinyCacheService.cache.Race[unparsedCharacters.data[key].raceHash];
       character.emblem = this.destinyCacheService.cache.InventoryItem[character.emblemHash];
 
       returnArr.push(character);
@@ -208,26 +209,39 @@ export class ParseService {
   }
 
   public parseDestinyCharacterProgressionComponent(
-      unparsedProgressions: DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent):
-      any {
+      unparsedProgressions: DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
+      characters: ADWDCharacterAndProgression[]):
+      ADWDCharacterAndProgression[] {
     const returnHash = {};
 
-    Object.keys(unparsedProgressions.data).forEach((key: any) => {
-      const progression = new DestinyCharacterProgressionComponent;
+    for (const character of characters) {
 
-      console.warn(unparsedProgressions.data[key].milestones);
+      const unparsedCharacter = unparsedProgressions.data[character.characterId];
 
-      // milestone available quest status???
+      // Progressions
+      character.progressions = [];
+      Object.keys(unparsedCharacter.progressions).forEach((key: any) => {
+        const progression = new DestinyProgression;
+        Object.assign(progression, unparsedCharacter.progressions[key]);
+        progression.progression = this.destinyCacheService.cache.Progression[unparsedCharacter.progressions[key].progressionHash];
+        character.progressions.push(progression);
+      });
 
-      const milestones = this.parseMilestones(unparsedProgressions.data[key].milestones);
-      progression.milestones = milestones;
-      const progressions = this.parseDestinyProgressions(unparsedProgressions.data[key].progressions);
-      progression.progressions = progressions;
-      returnHash[key] = progression;
-    });
+      // Milestones
+      character.milestones = [];
+      Object.keys(unparsedCharacter.milestones).forEach((key: any) => {
 
-    console.log(returnHash);
-    return returnHash;
+        // Need to actually parse the milestones
+
+
+        const milestone = new DestinyMilestone;
+        Object.assign(milestone, unparsedCharacter.milestones[key]);
+        character.milestones.push(milestone);
+      });
+
+    }
+
+    return characters;
     }
 
     public parseMilestones(unparsedMilestones: DestinyMilestone): DestinyMilestone[] {
