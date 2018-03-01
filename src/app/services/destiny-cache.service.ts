@@ -17,9 +17,9 @@ export class DestinyCacheService {
           reject(err);
         }
         console.log('in cache service, zip found');
-        let zip = new JSZip();
+        const zip = new JSZip();
         zip.loadAsync(data).then((zip) => {
-          zip.file("destiny2.json").async("string").then((data) => {
+          zip.file('destiny2.json').async('string').then((data) => {
             console.log('in cache service, json loaded');
             this.cache = JSON.parse(data);
             console.log('in cache service, json parsed');

@@ -1,6 +1,11 @@
 import { DestinyMilestoneDefinition,
          DestinyVendorDefinition,
-         DestinyInventoryItemDefinition } from './destiny-definitions';
+         DestinyInventoryItemDefinition,
+         DestinyActivityDefinition,
+         DestinyActivityModeDefinition,
+         DestinyActivityModifierDefinition} from './destiny-definitions';
+import { DestinyQuestStatus } from './destiny-quests';
+import { DestinyChallengeStatus } from './destiny-challenges';
 
 export class DestinyMilestone {
   milestoneHash;
@@ -24,7 +29,11 @@ export class DestinyMilestoneQuestRewardItem {
 }
 
 export class DestinyMilestoneQuest {
-
+  questItemHash: number;
+  questItem: DestinyInventoryItemDefinition;
+  status: DestinyQuestStatus;
+  activity: DestinyMilestoneActivity;
+  challenges: DestinyChallengeStatus[];
 }
 
 export class DestinyMilestoneVendor {
@@ -33,4 +42,33 @@ export class DestinyMilestoneVendor {
 
 export class DestinyMilestoneRewardCategory {
 
+}
+
+export class DestinyMilestoneActivity {
+  activityHash: number;
+  activity: DestinyActivityDefinition;
+  activityModeHash: number;
+  activityMode: DestinyActivityModeDefinition;
+  activityModeType: number;
+  modifierHashes: number[];
+  modifiers: DestinyActivityModifierDefinition[];
+  variants: DestinyActivityMilestoneVariant[];
+}
+
+export class DestinyActivityMilestoneVariant {
+  activityHash: number;
+  activity: DestinyActivityDefinition;
+  completionStatus: DestinyMilestoneActivityCompletionStatus;
+  activityModeHash: number;
+  activityMode: DestinyActivityModeDefinition;
+  activityModeType: number;
+}
+
+export class DestinyMilestoneActivityCompletionStatus {
+  completed: boolean;
+  phases: DestinyMilestoneActivityPhase[];
+}
+
+export class DestinyMilestoneActivityPhase {
+  complete: boolean;
 }

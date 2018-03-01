@@ -14,9 +14,10 @@ import { DestinyObjectiveDefinition,
          DestinyActivityChallengeDefinition,
          DestinyMilestoneQuestDefinition,
          DestinyMilestoneActivityDefinition } from '../models/destiny-definitions';
-import { DestinyMilestone } from '../models/destiny-milestones';
+import { DestinyMilestone, DestinyMilestoneQuest } from '../models/destiny-milestones';
 import { DestinyProgression } from '../models/destiny';
 import { ADWDCharacter, ADWDCharacterAndProgression } from '../models/adwd-models';
+import { DestinyQuestStatus, DestinyObjectiveProgress } from '../models/destiny-quests';
 
 const CONTENT_BASE_URL = 'http://www.bungie.net/';
 
@@ -230,13 +231,7 @@ export class ParseService {
       // Milestones
       character.milestones = [];
       Object.keys(unparsedCharacter.milestones).forEach((key: any) => {
-
-        // Need to actually parse the milestones
-
-
-        const milestone = new DestinyMilestone;
-        Object.assign(milestone, unparsedCharacter.milestones[key]);
-        character.milestones.push(milestone);
+        character.milestones.push(this.parseDestinyMilestone(unparsedCharacter.milestones[key]));
       });
 
     }
@@ -264,5 +259,57 @@ export class ParseService {
       });
 
       return returnArr;
+    }
+
+    public parseDestinyMilestone(unparsedMilestone: DestinyMilestone): DestinyMilestone {
+      const milestone = new DestinyMilestone;
+      Object.assign(milestone, unparsedMilestone);
+      milestone.milestone = this.destinyCacheService.cache.Milestone[milestone.milestoneHash];
+      if (milestone.availableQuests) {
+        for (const quest of milestone.availableQuests) {
+          this.parseDestinyMilestoneQuest(quest);
+        }
+      }
+
+      // TODO: parse vendors
+
+      // TODO: parse rewards
+
+      return milestone;
+    }
+
+    public parseDestinyMilestoneQuest(unparsedMilestoneQuest: DestinyMilestoneQuest): DestinyMilestoneQuest {
+      unparsedMilestoneQuest.questItem = this.destinyCacheService.cache.InventoryItem[unparsedMilestoneQuest.questItemHash];
+
+      this.parseDestinyQuestStatus(unparsedMilestoneQuest.status);
+
+      // TODO: parse activity
+
+      // TODO: parse challenges
+
+      return unparsedMilestoneQuest;
+    }
+
+    public parseDestinyQuestStatus(status: DestinyQuestStatus): DestinyQuestStatus {
+      status.quest = this.destinyCacheService.cache.InventoryItem[status.questHash];
+      status.step = this.destinyCacheService.cache.InventoryItem[status.stepHash];
+
+      if (status.stepObjectives) {
+        for (const objective of status.stepObjectives) {
+          this.parseDestinyObjectiveProgress(objective);
+        }
+      }
+
+      return status;
+    }
+
+    public parseDestinyObjectiveProgress(objectiveProgress: DestinyObjectiveProgress): DestinyObjectiveProgress {
+      objectiveProgress.objective = this.destinyCacheService.cache.Objective[objectiveProgress.objectiveHash];
+
+      // TODO: parse destination - don't see in manifest
+
+      objectiveProgress.activity = this.destinyCacheService.cache.Activity[objectiveProgress.activityHash];
+
+      return objectiveProgress;
     }
 }

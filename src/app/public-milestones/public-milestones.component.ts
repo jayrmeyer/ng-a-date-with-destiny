@@ -25,7 +25,7 @@ export class PublicMilestonesComponent implements OnInit {
     this.bungieService.getPublicMilestones()
       .subscribe(response => {
         this.publicMilestones = response.Response;
-        this.milestones = this.parseService.parseMilestones(response.Response);
+        // this.milestones = this.parseService.parseMilestones(response.Response);
       });
   }
 
