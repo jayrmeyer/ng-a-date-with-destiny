@@ -72,3 +72,48 @@ export class DestinyMilestoneActivityCompletionStatus {
 export class DestinyMilestoneActivityPhase {
   complete: boolean;
 }
+
+export class DestinyPublicMilestone {
+  milestoneHash: number;
+  milestone: DestinyMilestoneDefinition;
+  availableQuests: DestinyPublicMilestoneQuest[];
+  vendorHashes: number[];
+  vendors: DestinyPublicMilestoneVendor[];
+  startDate: Date;
+  endDate: Date;
+}
+
+export class DestinyPublicMilestoneQuest {
+  questItemHash: number;
+  questItem: DestinyInventoryItemDefinition;
+  activity: DestinyPublicMilestoneActivity;
+  challenges: DestinyPublicMilestoneChallenge[];
+
+}
+
+export class DestinyPublicMilestoneVendor {
+  vendorHash: number;
+  previewItemHash: number;
+}
+
+export class DestinyPublicMilestoneActivity {
+  activityHash: number;
+  activity: DestinyActivityDefinition;
+  modifierHashes: number[];
+  modifiers: DestinyActivityModifierDefinition[];
+  variants: DestinyPublicMilestoneActivityVariant[];
+  activityModeHash: number;
+  activityMode: DestinyActivityModeDefinition;
+  activityModeType: number;
+}
+
+export class DestinyPublicMilestoneActivityVariant {
+  activityHash: number;
+  activityModeHash: number;
+  activityModeType: number;
+}
+
+export interface DestinyPublicMilestoneChallenge {
+  objectiveHash: number;
+  activityHash: number;
+}

@@ -440,7 +440,23 @@ export class DestinyPublicMilestoneChallengeDefinition {
 }
 
 export class DestinyMilestoneDefinition {
-
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  image: string;
+  milestoneType: number;  // DestinyMilestoneType enum
+  recruitable: boolean;
+  friendlyName: string;
+  showInExplorer: boolean;
+  explorePrioritizesActivityImage: boolean;
+  hasPredictableDates: boolean;
+  quests: DestinyMilestoneQuestDefinition;
+  rewards: DestinyMilestoneRewardCategoryDefinition;
+  vendorsDisplayTitle: string;
+  vendors: DestinyMilestoneVendorDefinition[];
+  values: DestinyMilestoneValueDefinition;
+  isInGameMilestone: boolean;
+  hash: number;
+  index: number;
+  redacted: boolean;
 }
 
 export class DestinyRaceDefinition {

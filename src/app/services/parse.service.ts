@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { DestinyCacheService } from './destiny-cache.service';
 import '../models/destiny-public-milestone';
-import { DestinyPublicMilestone,
-         Milestone } from '../models/destiny-public-milestone';
+import { Milestone } from '../models/destiny-public-milestone';
 import { DestinyCharacterProgressionComponent } from '../models/destiny-character';
 import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
          DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
@@ -14,7 +13,11 @@ import { DestinyObjectiveDefinition,
          DestinyActivityChallengeDefinition,
          DestinyMilestoneQuestDefinition,
          DestinyMilestoneActivityDefinition } from '../models/destiny-definitions';
-import { DestinyMilestone, DestinyMilestoneQuest } from '../models/destiny-milestones';
+import {
+  DestinyPublicMilestone,
+  DestinyMilestone,
+  DestinyMilestoneQuest,
+  DestinyPublicMilestoneActivity } from '../models/destiny-milestones';
 import { DestinyProgression } from '../models/destiny';
 import { ADWDCharacter, ADWDCharacterAndProgression } from '../models/adwd-models';
 import { DestinyQuestStatus, DestinyObjectiveProgress } from '../models/destiny-quests';
@@ -239,11 +242,27 @@ export class ParseService {
     return characters;
     }
 
-    public parseMilestones(unparsedMilestones: DestinyMilestone): DestinyMilestone[] {
-      const returnArr: DestinyMilestone[] = [];
+    public parseDestinyPublicMilestones(unparsedMilestones: DestinyPublicMilestone[]): DestinyPublicMilestone[] {
+      const returnArr: DestinyPublicMilestone[] = [];
 
       Object.keys(unparsedMilestones).forEach((key: any) => {
-        returnArr.push(unparsedMilestones[key]);
+        const milestone = new DestinyPublicMilestone;
+        Object.assign(milestone, unparsedMilestones[key]);
+
+        milestone.milestone = this.destinyCacheService.cache.Milestone[milestone.milestoneHash];
+
+        // parse quests
+        if (milestone.availableQuests) {
+          for (const quest of milestone.availableQuests) {
+            console.log('assigning quest');
+            quest.questItem = this.destinyCacheService.cache.InventoryItem[quest.questItemHash];
+            if (quest.activity) {
+              this.parseDestinyPublicMilestoneActivity(quest.activity);
+            }
+          }
+        }
+
+        returnArr.push(milestone);
       });
 
       return returnArr;
@@ -311,5 +330,23 @@ export class ParseService {
       objectiveProgress.activity = this.destinyCacheService.cache.Activity[objectiveProgress.activityHash];
 
       return objectiveProgress;
+    }
+
+    public parseDestinyPublicMilestoneActivity(activity: DestinyPublicMilestoneActivity): DestinyPublicMilestoneActivity {
+      console.log('parsing activity');
+      console.log(activity);
+      activity.activity = this.destinyCacheService.cache.Activity[activity.activityHash];
+
+      if (activity.modifierHashes) {
+        activity.modifiers = [];
+        for (const modifierHash of activity.modifierHashes) {
+          activity.modifiers.push(<DestinyActivityModifierDefinition>this.destinyCacheService.cache.ActivityModifier[modifierHash]);
+        }
+      }
+
+      // TODO: parse variants
+
+      activity.activityMode = this.destinyCacheService.cache.ActivityMode[activity.activityModeHash];
+      return activity;
     }
 }

@@ -8,6 +8,7 @@ import { DestinyDisplayPropertiesDefinition,
          DestinyMilestoneVendorDefinition,
          DestinyMilestoneValueDefinition } from './destiny-definitions';
 import { DestinyItemQuantity } from './destiny';
+import { DestinyPublicMilestone } from './destiny-milestones';
 
 // Following set of classes are for the base message with hash values
 // "Usable" classes with descriptions are listed below
@@ -20,45 +21,13 @@ export interface PublicMilestoneBungieResponse {
   MessageData: string;
 }
 
-export interface DestinyPublicMilestone {
-  milestoneHash: number;
-  availableQuests: DestinyPublicMilestoneQuest[];
-  vendorHashes: number[];
-  vendors: DestinyPublicMilestoneVendor[];
-  startDate: Date;
-  endDate: Date;
-}
 
-export interface DestinyPublicMilestoneQuest {
-  questItemHash: number;
-  activity: DestinyPublicMilestoneActivity;
-  challenges: DestinyPublicMilestoneChallenge[];
 
-}
 
-export interface DestinyPublicMilestoneVendor {
-  vendorHash: number;
-  previewItemHash: number;
-}
 
-export interface DestinyPublicMilestoneActivity {
-  activityHash: number;
-  modifierHashes: number[];
-  variants: DestinyPublicMilestoneActivityVariant[];
-  activityModeHash: number;
-  activityModeType: number;
-}
 
-export interface DestinyPublicMilestoneActivityVariant {
-  activityHash: number;
-  activityModeHash: number;
-  activityModeType: number;
-}
 
-export interface DestinyPublicMilestoneChallenge {
-  objectiveHash: number;
-  activityHash: number;
-}
+
 
 // Following are the "Usable" classes
 export class Milestone {

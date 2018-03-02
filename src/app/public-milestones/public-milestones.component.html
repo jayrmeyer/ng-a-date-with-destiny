@@ -5,64 +5,64 @@
       <mat-expansion-panel-header>
 
         <mat-panel-title>
-          <div *ngIf="milestone.quests && milestone.quests.length<2;else usemilestone1">
-            <div *ngFor='let quest of milestone.quests'>
-              <b>{{quest.displayProperties.name}}</b>
+          <div *ngIf="milestone.availableQuests && milestone.availableQuests.length<2;else usemilestone1">
+            <div *ngFor='let quest of milestone.availableQuests'>
+              <b>{{quest.questItem.displayProperties.name}}</b>
             </div>
           </div>
 
           <ng-template #usemilestone1>
-              <b>{{milestone.displayProperties.name}}</b>
+              <b>{{milestone.milestone.displayProperties.name}}</b>
           </ng-template>
 
         </mat-panel-title>
 
         <mat-panel-description>
-          <div *ngIf="milestone.quests && milestone.quests.length<2;else usemilestone2">
-              <div *ngFor='let quest of milestone.quests'>
-                {{quest.displayProperties.description}}
+          <div *ngIf="milestone.availableQuests && milestone.availableQuests.length<2;else usemilestone2">
+              <div *ngFor='let quest of milestone.availableQuests'>
+                {{quest.questItem.displayProperties.description}}
               </div>
             </div>
 
             <ng-template #usemilestone2>
-              {{milestone.displayProperties.description}}
+              {{milestone.milestone.displayProperties.description}}
             </ng-template>
 
         </mat-panel-description>
 
       </mat-expansion-panel-header>
 
-     <div *ngIf="milestone.quests && milestone.quests.length<2;else usemilestone3">
-        <div *ngFor='let quest of milestone.quests'>
-          <div *ngIf="quest.activities;else usequest">
+     <div *ngIf="milestone.availableQuests && milestone.availableQuests.length<2;else usemilestone3">
+        <div *ngFor='let quest of milestone.availableQuests'>
+          <div *ngIf="quest.activity;else usequest">
             <table width="100%">
 
               <tr>
                 <td rowspan=2 width="25%">
-                  <div *ngIf="quest.activities.conceptualActivity.pgcrImage">
-                      <img src="http://www.bungie.net{{quest.activities.conceptualActivity.pgcrImage}}" style="max-width: 100%; height: auto">
+                  <div *ngIf="quest.activity.activity.pgcrImage">
+                      <img src="http://www.bungie.net{{quest.activity.activity.pgcrImage}}" style="max-width: 100%; height: auto">
                   </div>
                 </td>
 
-                <td width="75%"><b>{{quest.activities.conceptualActivity.displayProperties.name}}</b></td>
+                <td width="75%"><b>{{quest.activity.activity.displayProperties.name}}</b></td>
               </tr>
 
               <tr>
-                <td width="75%">{{quest.activities.conceptualActivity.displayProperties.description}}</td>
+                <td width="75%">{{quest.activity.activity.displayProperties.description}}</td>
               </tr>
 
             </table>
 
-            <div *ngIf="quest.activities.conceptualActivity.modifiers">
+            <div *ngIf="quest.activity.activity.modifiers">
               <h2>Modifiers</h2>
-              <ul *ngFor='let modifier of quest.activities.conceptualActivity.modifiers'>
+              <ul *ngFor='let modifier of quest.activity.activity.modifiers'>
                 <li [ngStyle]="{'list-style-image': getIcon(modifier.displayProperties.icon)}"><b>{{modifier.displayProperties.name}} - </b>{{modifier.displayProperties.description}}</li>
               </ul>
             </div>
 
-            <div *ngIf="quest.activities.conceptualActivity.challenges">
+            <div *ngIf="quest.activity.activity.challenges">
               <h2>Challenges</h2>
-              <ul *ngFor='let challenge of quest.activities.conceptualActivity.challenges'>
+              <ul *ngFor='let challenge of quest.activity.activity.challenges'>
                 <div *ngIf="challenge.objective.displayProperties.hasIcon;else usenormalbullet">
                   <li [ngStyle]="{'list-style-image': getIcon(challenge.objective.displayProperties.icon)}"><b>{{challenge.objective.displayProperties.name}} - </b>{{challenge.objective.displayProperties.description}}</li>
                 </div>
@@ -84,11 +84,11 @@
                         <img src="http://www.bungie.net{{quest.overrideImage}}" style="max-width: 100%; height: auto">
                       </div>
                     </td>
-                    <td width="75%"><b>{{quest.displayProperties.name}}</b></td>
+                    <td width="75%"><b>{{quest.questItem.displayProperties.name}}</b></td>
                   </tr>
 
                   <tr>
-                    <td width="75%">{{quest.displayProperties.description}}</td>
+                    <td width="75%">{{quest.questItem.displayProperties.description}}</td>
                   </tr>
 
                 </table>
@@ -101,16 +101,16 @@
           <tr>
 
             <td rowspan=2 width="25%">
-              <div *ngIf="milestone.image">
-                <img src="http://www.bungie.net{{milestone.image}}" style="max-width: 100%; height: auto">
+              <div *ngIf="milestone.milestone.image">
+                <img src="http://www.bungie.net{{milestone.milestone.image}}" style="max-width: 100%; height: auto">
               </div>
             </td>
 
-            <td width="75%"><b>{{milestone.displayProperties.name}}</b></td>
+            <td width="75%"><b>{{milestone.milestone.displayProperties.name}}</b></td>
           </tr>
 
           <tr>
-            <td width="75%">{{milestone.displayProperties.description}}</td>
+            <td width="75%">{{milestone.milestone.displayProperties.description}}</td>
           </tr>
         </table>
       </ng-template>
