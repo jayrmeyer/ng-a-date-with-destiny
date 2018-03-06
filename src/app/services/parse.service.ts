@@ -17,7 +17,8 @@ import {
   DestinyPublicMilestone,
   DestinyMilestone,
   DestinyMilestoneQuest,
-  DestinyPublicMilestoneActivity } from '../models/destiny-milestones';
+  DestinyPublicMilestoneActivity,
+  DestinyPublicMilestoneChallenge } from '../models/destiny-milestones';
 import { DestinyProgression } from '../models/destiny';
 import { ADWDCharacter, ADWDCharacterAndProgression } from '../models/adwd-models';
 import { DestinyQuestStatus, DestinyObjectiveProgress } from '../models/destiny-quests';
@@ -250,6 +251,7 @@ export class ParseService {
         Object.assign(milestone, unparsedMilestones[key]);
 
         milestone.milestone = this.destinyCacheService.cache.Milestone[milestone.milestoneHash];
+        console.log('parsing milestone ' + milestone.milestoneHash);
 
         // parse quests
         if (milestone.availableQuests) {
@@ -258,6 +260,11 @@ export class ParseService {
             quest.questItem = this.destinyCacheService.cache.InventoryItem[quest.questItemHash];
             if (quest.activity) {
               this.parseDestinyPublicMilestoneActivity(quest.activity);
+            }
+            if (quest.challenges) {
+              for (const challenge of quest.challenges) {
+                this.parseDestinyPublicMilestoneChallenge(challenge);
+              }
             }
           }
         }
@@ -338,15 +345,23 @@ export class ParseService {
       activity.activity = this.destinyCacheService.cache.Activity[activity.activityHash];
 
       if (activity.modifierHashes) {
+        console.log('parsing modifiers');
         activity.modifiers = [];
         for (const modifierHash of activity.modifierHashes) {
           activity.modifiers.push(<DestinyActivityModifierDefinition>this.destinyCacheService.cache.ActivityModifier[modifierHash]);
         }
+      } else {
+        activity.modifiers = null;
       }
 
       // TODO: parse variants
 
       activity.activityMode = this.destinyCacheService.cache.ActivityMode[activity.activityModeHash];
       return activity;
+    }
+    public parseDestinyPublicMilestoneChallenge(challenge: DestinyPublicMilestoneChallenge): DestinyPublicMilestoneChallenge {
+      challenge.objective = this.destinyCacheService.cache.Objective[challenge.objectiveHash];
+      challenge.activity = this.destinyCacheService.cache.Activity[challenge.activityHash];
+      return challenge;
     }
 }

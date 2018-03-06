@@ -3,7 +3,8 @@ import { DestinyMilestoneDefinition,
          DestinyInventoryItemDefinition,
          DestinyActivityDefinition,
          DestinyActivityModeDefinition,
-         DestinyActivityModifierDefinition} from './destiny-definitions';
+         DestinyActivityModifierDefinition,
+         DestinyObjectiveDefinition} from './destiny-definitions';
 import { DestinyQuestStatus } from './destiny-quests';
 import { DestinyChallengeStatus } from './destiny-challenges';
 
@@ -115,5 +116,7 @@ export class DestinyPublicMilestoneActivityVariant {
 
 export interface DestinyPublicMilestoneChallenge {
   objectiveHash: number;
+  objective: DestinyObjectiveDefinition;
   activityHash: number;
+  activity: DestinyActivityDefinition;
 }

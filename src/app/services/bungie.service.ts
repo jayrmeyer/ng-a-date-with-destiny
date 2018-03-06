@@ -6,7 +6,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 
 import { environment } from '../../environments/environment';
-import { PublicMilestoneBungieResponse, DestinyPublicMilestone } from '../models/destiny-public-milestone';
+import { PublicMilestoneBungieResponse } from '../models/destiny-public-milestone';
+import { DestinyPublicMilestone } from '../models/destiny-milestones';
 import { BungieUserByIdBungieResponse, ProfileBungieResponse, DestinyPlayerBungieResponse } from '../models/destiny-user';
 import { AuthService } from './auth.service';
 // import { HttpParams } from '@angular/common/http/src/params';

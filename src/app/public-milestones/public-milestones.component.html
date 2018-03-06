@@ -7,12 +7,17 @@
         <mat-panel-title>
           <div *ngIf="milestone.availableQuests && milestone.availableQuests.length<2;else usemilestone1">
             <div *ngFor='let quest of milestone.availableQuests'>
-              <b>{{quest.questItem.displayProperties.name}}</b>
+              <b>{{milestone.milestone.quests[quest.questItemHash].displayProperties.name}}</b>
             </div>
           </div>
 
           <ng-template #usemilestone1>
+            <div *ngIf="milestone.milestone.displayProperties; else nodisplayproperties1">
               <b>{{milestone.milestone.displayProperties.name}}</b>
+            </div>
+            <ng-template #nodisplayproperties1>
+              <b>{{milestone.milestone.friendlyName}}</b>
+            </ng-template>
           </ng-template>
 
         </mat-panel-title>
@@ -20,12 +25,15 @@
         <mat-panel-description>
           <div *ngIf="milestone.availableQuests && milestone.availableQuests.length<2;else usemilestone2">
               <div *ngFor='let quest of milestone.availableQuests'>
-                {{quest.questItem.displayProperties.description}}
+                {{milestone.milestone.quests[quest.questItemHash].displayProperties.description}}
               </div>
             </div>
 
             <ng-template #usemilestone2>
-              {{milestone.milestone.displayProperties.description}}
+              <div *ngIf="milestone.milestone.displayProperties; else nodisplayproperties2">
+                {{milestone.milestone.displayProperties.description}}
+              </div>
+              <ng-template #nodisplayproperties2></ng-template>
             </ng-template>
 
         </mat-panel-description>
@@ -52,17 +60,22 @@
               </tr>
 
             </table>
-
-            <div *ngIf="quest.activity.activity.modifiers">
+<!--
+            <div *ngIf="quest.activity.activity.modifiers && quest.activity.activity.modifiers.length > 0">
               <h2>Modifiers</h2>
               <ul *ngFor='let modifier of quest.activity.activity.modifiers'>
-                <li [ngStyle]="{'list-style-image': getIcon(modifier.displayProperties.icon)}"><b>{{modifier.displayProperties.name}} - </b>{{modifier.displayProperties.description}}</li>
+                <div *ngIf="modifier.displayProperties.hasIcon;else nomodifiericon">
+                  <li [ngStyle]="{'list-style-image': getIcon(modifier.displayProperties.icon)}"><b>{{modifier.displayProperties.name}} - </b>{{modifier.displayProperties.description}}</li>
+                </div>
+                <ng-template #nomodifiericon>
+                  <li><b>{{modifier.displayProperties.name}} - </b>{{modifier.displayProperties.description}}</li>
+                </ng-template>
               </ul>
             </div>
 
-            <div *ngIf="quest.activity.activity.challenges">
+            <div *ngIf="quest.challenges && quest.challenges.length > 0">
               <h2>Challenges</h2>
-              <ul *ngFor='let challenge of quest.activity.activity.challenges'>
+              <ul *ngFor='let challenge of quest.challenges'>
                 <div *ngIf="challenge.objective.displayProperties.hasIcon;else usenormalbullet">
                   <li [ngStyle]="{'list-style-image': getIcon(challenge.objective.displayProperties.icon)}"><b>{{challenge.objective.displayProperties.name}} - </b>{{challenge.objective.displayProperties.description}}</li>
                 </div>
@@ -72,7 +85,7 @@
                 </ng-template>
               </ul>
             </div>
-
+-->
           </div>
 
           <ng-template #usequest>
@@ -106,11 +119,23 @@
               </div>
             </td>
 
-            <td width="75%"><b>{{milestone.milestone.displayProperties.name}}</b></td>
+            <td width="75%">
+              <div *ngIf="milestone.milestone.displayProperties; else nodisplayproperties3">
+                <b>{{milestone.milestone.displayProperties.name}}</b>
+              </div>
+              <ng-template #nodisplayproperties3>
+                <b>{{milestone.milestone.friendlyName}}</b>
+              </ng-template>
+            </td>
           </tr>
 
           <tr>
-            <td width="75%">{{milestone.milestone.displayProperties.description}}</td>
+            <td width="75%">
+              <div *ngIf="milestone.milestone.displayProperties; else nodisplayproperties4">
+                {{milestone.milestone.displayProperties.description}}
+              </div>
+              <ng-template #nodisplayproperties4></ng-template>
+            </td>
           </tr>
         </table>
       </ng-template>
