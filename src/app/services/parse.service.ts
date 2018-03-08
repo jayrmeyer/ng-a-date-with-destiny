@@ -23,7 +23,7 @@ import { DestinyProgression } from '../models/destiny';
 import { ADWDCharacter, ADWDCharacterAndProgression } from '../models/adwd-models';
 import { DestinyQuestStatus, DestinyObjectiveProgress } from '../models/destiny-quests';
 
-const CONTENT_BASE_URL = 'http://www.bungie.net/';
+const CONTENT_BASE_URL = 'https://www.bungie.net/';
 
 @Injectable()
 export class ParseService {
@@ -221,7 +221,7 @@ export class ParseService {
 
     for (const character of characters) {
 
-      const unparsedCharacter = unparsedProgressions.data[character.characterId];
+      const unparsedCharacter: DestinyCharacterProgressionComponent = unparsedProgressions.data[character.characterId];
 
       // Progressions
       character.progressions = [];
@@ -251,12 +251,10 @@ export class ParseService {
         Object.assign(milestone, unparsedMilestones[key]);
 
         milestone.milestone = this.destinyCacheService.cache.Milestone[milestone.milestoneHash];
-        console.log('parsing milestone ' + milestone.milestoneHash);
 
         // parse quests
         if (milestone.availableQuests) {
           for (const quest of milestone.availableQuests) {
-            console.log('assigning quest');
             quest.questItem = this.destinyCacheService.cache.InventoryItem[quest.questItemHash];
             if (quest.activity) {
               this.parseDestinyPublicMilestoneActivity(quest.activity);
@@ -340,12 +338,9 @@ export class ParseService {
     }
 
     public parseDestinyPublicMilestoneActivity(activity: DestinyPublicMilestoneActivity): DestinyPublicMilestoneActivity {
-      console.log('parsing activity');
-      console.log(activity);
       activity.activity = this.destinyCacheService.cache.Activity[activity.activityHash];
 
       if (activity.modifierHashes) {
-        console.log('parsing modifiers');
         activity.modifiers = [];
         for (const modifierHash of activity.modifierHashes) {
           activity.modifiers.push(<DestinyActivityModifierDefinition>this.destinyCacheService.cache.ActivityModifier[modifierHash]);

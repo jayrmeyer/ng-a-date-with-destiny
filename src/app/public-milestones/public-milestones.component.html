@@ -48,7 +48,7 @@
               <tr>
                 <td rowspan=2 width="25%">
                   <div *ngIf="quest.activity.activity.pgcrImage">
-                      <img src="http://www.bungie.net{{quest.activity.activity.pgcrImage}}" style="max-width: 100%; height: auto">
+                      <img src="https://www.bungie.net{{quest.activity.activity.pgcrImage}}" style="max-width: 100%; height: auto">
                   </div>
                 </td>
 
@@ -72,7 +72,7 @@
                 </ng-template>
               </ul>
             </div>
-
+          -->
             <div *ngIf="quest.challenges && quest.challenges.length > 0">
               <h2>Challenges</h2>
               <ul *ngFor='let challenge of quest.challenges'>
@@ -85,7 +85,7 @@
                 </ng-template>
               </ul>
             </div>
--->
+
           </div>
 
           <ng-template #usequest>
@@ -94,7 +94,7 @@
                   <tr>
                     <td rowspan=2 width="25%">
                       <div *ngIf="quest.overrideImage">
-                        <img src="http://www.bungie.net{{quest.overrideImage}}" style="max-width: 100%; height: auto">
+                        <img src="https://www.bungie.net{{quest.overrideImage}}" style="max-width: 100%; height: auto">
                       </div>
                     </td>
                     <td width="75%"><b>{{quest.questItem.displayProperties.name}}</b></td>
@@ -115,7 +115,7 @@
 
             <td rowspan=2 width="25%">
               <div *ngIf="milestone.milestone.image">
-                <img src="http://www.bungie.net{{milestone.milestone.image}}" style="max-width: 100%; height: auto">
+                <img src="https://www.bungie.net{{milestone.milestone.image}}" style="max-width: 100%; height: auto">
               </div>
             </td>
 

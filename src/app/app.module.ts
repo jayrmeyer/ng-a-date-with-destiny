@@ -33,6 +33,8 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatStepperModule,
+  MatAccordion,
+  MatExpansionPanel
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
