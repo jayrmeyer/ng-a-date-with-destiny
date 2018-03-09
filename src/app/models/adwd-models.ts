@@ -9,6 +9,7 @@ import { DestinyProgression } from './destiny';
 import { DestinyFactionProgression } from './destiny-progression';
 import { DestinyMilestone } from './destiny-milestones';
 import { DestinyQuestStatus } from './destiny-quests';
+import { DestinyItemComponent } from './destiny-item';
 
 export class ADWDCharacter {
   membershipId: number;
@@ -43,4 +44,8 @@ export class ADWDCharacterAndProgression extends ADWDCharacter {
   milestones: DestinyMilestone[];
   quests: DestinyQuestStatus[];
   uninstantiatedItemObjectives: DestinyInventoryItemDefinition[];
+}
+
+export class ADWDCharacterAndEquiped extends ADWDCharacter {
+  items: DestinyItemComponent[];
 }

@@ -15,6 +15,7 @@ import { DestinyVendorDefinition,
          DestinyGenderDefinition } from './destiny-definitions';
 import { Milestone } from './destiny-public-milestone';
 import { DestinyCharacterProgressionComponent } from './destiny-character';
+import { DestinyInventoryComponent } from './destiny-inventory';
 
 // Following set of classes are for the base message with hash values
 // "Usable" classes with descriptions are listed below
@@ -100,7 +101,7 @@ export interface DestinyProfileResponse {
   characterProgressions: DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent;
   // characterRenderData: DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent;
   // characterActivities: DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent;
-  // characterEquipment: DictionaryComponentResponseOfint645AndDestinyInventoryComponent;
+  characterEquipment: DictionaryComponentResponseOfint64AndDestinyInventoryComponent;
   // characterKiosks: DictionaryComponentResponseOfint64AndDestinyKiosksComponent;
   // itemComponents: DestinyItemComponentSetOfint64;
 }
@@ -150,6 +151,11 @@ export class UserInfoCard {
 
 export interface DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent {
   data: DestinyCharacterProgressionComponent;
+  privacy: number;
+}
+
+export interface DictionaryComponentResponseOfint64AndDestinyInventoryComponent {
+  data: DestinyInventoryComponent;
   privacy: number;
 }
 

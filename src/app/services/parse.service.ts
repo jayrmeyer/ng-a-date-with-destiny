@@ -6,6 +6,7 @@ import { Milestone } from '../models/destiny-public-milestone';
 import { DestinyCharacterProgressionComponent } from '../models/destiny-character';
 import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
          DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
+         DictionaryComponentResponseOfint64AndDestinyInventoryComponent
          DestinyCharacterComponent} from '../models/destiny-user';
 import { DestinyObjectiveDefinition,
          DestinyActivityDefinition,
@@ -20,8 +21,9 @@ import {
   DestinyPublicMilestoneActivity,
   DestinyPublicMilestoneChallenge } from '../models/destiny-milestones';
 import { DestinyProgression } from '../models/destiny';
-import { ADWDCharacter, ADWDCharacterAndProgression } from '../models/adwd-models';
+import { ADWDCharacter, ADWDCharacterAndProgression, ADWDCharacterAndEquiped } from '../models/adwd-models';
 import { DestinyQuestStatus, DestinyObjectiveProgress } from '../models/destiny-quests';
+import { DestinyItemComponent } from '../models/destiny-item';
 
 const CONTENT_BASE_URL = 'https://www.bungie.net/';
 
@@ -221,21 +223,22 @@ export class ParseService {
 
     for (const character of characters) {
 
-      const unparsedCharacter: DestinyCharacterProgressionComponent = unparsedProgressions.data[character.characterId];
+      const unparsedCharacterProgression: DestinyCharacterProgressionComponent = unparsedProgressions.data[character.characterId];
 
       // Progressions
       character.progressions = [];
-      Object.keys(unparsedCharacter.progressions).forEach((key: any) => {
+      Object.keys(unparsedCharacterProgression.progressions).forEach((key: any) => {
         const progression = new DestinyProgression;
-        Object.assign(progression, unparsedCharacter.progressions[key]);
-        progression.progression = this.destinyCacheService.cache.Progression[unparsedCharacter.progressions[key].progressionHash];
+        Object.assign(progression, unparsedCharacterProgression.progressions[key]);
+        progression.progression = this.destinyCacheService.cache.Progression[
+          unparsedCharacterProgression.progressions[key].progressionHash];
         character.progressions.push(progression);
       });
 
       // Milestones
       character.milestones = [];
-      Object.keys(unparsedCharacter.milestones).forEach((key: any) => {
-        character.milestones.push(this.parseDestinyMilestone(unparsedCharacter.milestones[key]));
+      Object.keys(unparsedCharacterProgression.milestones).forEach((key: any) => {
+        character.milestones.push(this.parseDestinyMilestone(unparsedCharacterProgression.milestones[key]));
       });
 
     }
@@ -359,4 +362,29 @@ export class ParseService {
       challenge.activity = this.destinyCacheService.cache.Activity[challenge.activityHash];
       return challenge;
     }
+
+  public parseDestinyInventoryComponent(unparsedInventory: DictionaryComponentResponseOfint64AndDestinyInventoryComponent,
+          characters: ADWDCharacterAndEquiped[]):
+          ADWDCharacterAndEquiped[] {
+
+    for (const character of characters) {
+      console.log('parsing character inventory for ' + character.characterId);
+
+      character.items = [];
+      for (const item of unparsedInventory.data[character.characterId].items) {
+        character.items.push(this.parseDestinyItemComponent(item));
+      }
+    }
+    return characters;
+  }
+
+  public parseDestinyItemComponent(unparsedItem: DestinyItemComponent): DestinyItemComponent {
+    const item = new DestinyItemComponent;
+
+    Object.assign(item, unparsedItem);
+    item.item = this.destinyCacheService.cache.InventoryItem[item.itemHash];
+    item.bucket = this.destinyCacheService.cache.InventoryBucket[item.bucketHash];
+
+    return item;
+  }
 }

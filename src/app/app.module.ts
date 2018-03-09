@@ -51,6 +51,7 @@ import { AuthComponent } from './auth/auth.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { LoggedInUserService } from './services/logged-in-user.service';
 import { CharactersComponent } from './characters/characters.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { CharactersComponent } from './characters/characters.component';
     HomeComponent,
     AuthComponent,
     UserInfoComponent,
-    CharactersComponent
+    CharactersComponent,
+    InventoryComponent
   ],
   imports: [
     BrowserModule,

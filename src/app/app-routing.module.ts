@@ -6,6 +6,7 @@ import { PublicMilestonesComponent } from './public-milestones/public-milestones
 import { AuthComponent } from './auth/auth.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { CharactersComponent } from './characters/characters.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'bungie_user/:memberId', component: UserInfoComponent},
   { path: 'characters/:membershipType/:memberId', component: CharactersComponent},
+  { path: 'inventory/:membershipType/:memberId', component: InventoryComponent},
   { path: '**', component: HomeComponent }
 ];
 

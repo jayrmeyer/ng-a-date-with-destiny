@@ -34,9 +34,6 @@ export class BungieService {
       'X-API-Key': environment.bungie.apiKey
     });
 
-    console.log(headers);
-    console.log(environment.bungie.apiUrl);
-
     return this.http.get<BungieUserByIdBungieResponse>(
       environment.bungie.apiUrl + 'User/GetBungieNetUserById/' + id + '/',
       { headers: headers})
@@ -49,9 +46,6 @@ export class BungieService {
     const headers = new HttpHeaders({
       'X-API-Key': environment.bungie.apiKey
     });
-
-    console.log(headers);
-    console.log(environment.bungie.apiUrl);
 
     return this.http.get<DestinyPlayerBungieResponse>(
       environment.bungie.apiUrl + 'Destiny2/SearchDestinyPlayer/' + membershipType + '/' + id + '/',

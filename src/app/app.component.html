@@ -28,6 +28,10 @@
           <mat-icon>people</mat-icon>
           <span>List of Characters</span>
         </button>
+        <button mat-menu-item *ngIf="loggedInUserInfoCard" routerLink="/inventory/{{loggedInUserInfoCard.membershipType}}/{{loggedInUserInfoCard.membershipId}}">
+          <mat-icon>shopping_basket</mat-icon>
+          <span>Manage Inventory</span>
+        </button>
       </mat-menu>
     </mat-toolbar>
   </div>

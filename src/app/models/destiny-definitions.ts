@@ -1,4 +1,4 @@
-import { DestinyItemQuantity } from './destiny';
+import { DestinyItemQuantity, ItemLocation } from './destiny';
 import { DestinyColor,
          DestinyAnimationReference,
          HyperlinkReference,
@@ -484,4 +484,13 @@ export class DestinyClassDefinition {
   hash: number;
   index: number;
   redacted: boolean;
+}
+
+export class DestinyInventoryBucketDefinition {
+  displayProperties: DestinyDisplayPropertiesDefinition;
+  scope: number;
+  category: number;
+  bucketOrder: number;
+  itemCount: number;
+  location: ItemLocation;
 }
