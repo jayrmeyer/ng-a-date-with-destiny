@@ -1,3 +1,31 @@
-<p>
-  inventory works!
-</p>
+<div *ngIf="characters">
+  <section class="app">
+    <div *ngFor='let character of characters'>
+      <p>{{character.class.displayProperties.name}}</p>
+      <p>Kinetic Weapons</p>
+      <mat-grid-list cols="3" rowHeight="200px">
+        <mat-grid-tile *ngFor='let item of character.items'>
+          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
+          <mat-grid-tile-footer>{{item.item.displayProperties.name}}</mat-grid-tile-footer>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <p>Energy Weapons</p>
+      <mat-grid-list cols="3" rowHeight="200px">
+        <mat-grid-tile *ngFor='let item of character.items'>
+          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
+          <mat-grid-tile-footer>{{item.item.displayProperties.name}}</mat-grid-tile-footer>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <p>Power Weapons</p>
+      <mat-grid-list cols="3" rowHeight="200px">
+        <mat-grid-tile *ngFor='let item of character.items'>
+          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
+          <mat-grid-tile-header>{{item.item.displayProperties.name}}</mat-grid-tile-header>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+    </div>
+   </section>
+</div>
