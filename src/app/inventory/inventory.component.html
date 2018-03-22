@@ -1,6 +1,9 @@
-<div *ngIf="characters">
+<div *ngIf="characters" class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
   <section class="app">
     <div *ngFor='let character of characters'>
+      <div fxFlex="20%">
+        <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
+      </div>
       <p>{{character.class.displayProperties.name}}</p>
       <p>Kinetic Weapons</p>
       <mat-grid-list cols="3" rowHeight="200px">

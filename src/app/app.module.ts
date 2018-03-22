@@ -37,6 +37,7 @@ import {
   MatExpansionPanel
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { PublicMilestonesComponent } from './public-milestones/public-milestones.component';
@@ -101,6 +102,7 @@ import { InventoryComponent } from './inventory/inventory.component';
     MatTooltipModule,
     MatStepperModule,
     HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [BungieService, DestinyCacheService, ParseService, AuthService, LoggedInUserService],
   bootstrap: [AppComponent]

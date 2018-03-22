@@ -6,7 +6,7 @@ import { Milestone } from '../models/destiny-public-milestone';
 import { DestinyCharacterProgressionComponent } from '../models/destiny-character';
 import { DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
          DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
-         DictionaryComponentResponseOfint64AndDestinyInventoryComponent
+         DictionaryComponentResponseOfint64AndDestinyInventoryComponent,
          DestinyCharacterComponent} from '../models/destiny-user';
 import { DestinyObjectiveDefinition,
          DestinyActivityDefinition,
