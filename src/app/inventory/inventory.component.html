@@ -1,8 +1,10 @@
-<div *ngIf="characters" class="container" fxLayout="column" fxLayout.xs="column" fxLayoutGap fxLayoutGap="0.5%" fxLayoutAlign="center">
+<div *ngIf="characters" class="container" fxLayout="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
   <section class="app">
     <div *ngFor='let character of characters'>
       <div *ngFor='let item of character.items' fxFlex="20%">
-        <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
+        <div fxLayout.gt-xs="row" fxLayout.xs="column">
+          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
+        </div>
       </div>
       <p>{{character.class.displayProperties.name}}</p>
       <p>Kinetic Weapons</p>
