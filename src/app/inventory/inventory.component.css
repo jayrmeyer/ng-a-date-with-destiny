@@ -2,8 +2,13 @@
   width: 100%;
   margin-bottom: 18%;
 }
+
+.jpg {
+  width: 100%;
+  margin-bottom: 18%;
+}
 .card-picture {
-  width: 23%;
+  width: 100%;
   margin-bottom: 2%;
 }
 .container {

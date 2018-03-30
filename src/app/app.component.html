@@ -1,4 +1,4 @@
-<body class="mat-app-background">
+<section class="mat-app-background flex-container" fxLayout="column" fxLayoutAlign="start stretch">
   <div class="adwd-toolbar-theme">
     <mat-toolbar color="primary">
       <span>{{ title }}</span>
@@ -36,5 +36,7 @@
     </mat-toolbar>
   </div>
 
-  <router-outlet></router-outlet>
-</body>
+  <section fxFlex>
+    <router-outlet></router-outlet>
+  </section>
+</section>

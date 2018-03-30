@@ -1,36 +1,23 @@
-<div *ngIf="characters" class="container" fxLayout="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-  <section class="app">
-    <div *ngFor='let character of characters'>
-      <div *ngFor='let item of character.items' fxFlex="20%">
-        <div fxLayout.gt-xs="row" fxLayout.xs="column">
-          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
-        </div>
+<div *ngIf="characters">
+  <div *ngFor='let character of characters' fxLayout="row wrap" fxLayoutGap="10px" class="container">
+    <div *ngFor='let item of character.items' fxLayout="column wrap" fxLayoutGap="10px" fxLayoutAlign="center">
+      <div fxLayout.gt-xs="row" fxLayout.xs="column">
+        <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
       </div>
-      <p>{{character.class.displayProperties.name}}</p>
-      <p>Kinetic Weapons</p>
-      <mat-grid-list cols="3" rowHeight="200px">
-        <mat-grid-tile *ngFor='let item of character.items'>
-          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
-          <mat-grid-tile-footer>{{item.item.displayProperties.name}}</mat-grid-tile-footer>
-        </mat-grid-tile>
-      </mat-grid-list>
-
-      <p>Energy Weapons</p>
-      <mat-grid-list cols="3" rowHeight="200px">
-        <mat-grid-tile *ngFor='let item of character.items'>
-          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
-          <mat-grid-tile-footer>{{item.item.displayProperties.name}}</mat-grid-tile-footer>
-        </mat-grid-tile>
-      </mat-grid-list>
-
-      <p>Power Weapons</p>
-      <mat-grid-list cols="3" rowHeight="200px">
-        <mat-grid-tile *ngFor='let item of character.items'>
-          <img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
-          <mat-grid-tile-header>{{item.item.displayProperties.name}}</mat-grid-tile-header>
-        </mat-grid-tile>
-      </mat-grid-list>
-
     </div>
-   </section>
+  </div>
+</div>
+
+<div *ngIf="characters">
+  <div *ngFor='let character of characters' fxlayout="row wrap" fxLayoutGap="10px" class="container">
+    <p>{{character.class.displayProperties.name}}</p>
+    <div *ngFor='let item of character.items' fxLayout="column" fxLayoutWrap fxLayoutGap="10px" fxLayoutALign="center">
+      <mat-card>
+        <img mat-card-img src="https://www.bungie.net{{item.item.displayProperties.icon}}">
+        <mat-card-content>
+          <p>{{item.item.displayProperties.name}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>

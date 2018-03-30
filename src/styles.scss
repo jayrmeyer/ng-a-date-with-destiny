@@ -26,6 +26,16 @@
 @include angular-material-theme($adwd-default-theme);
 @include adwd-toolbar-theme($adwd-default-theme);
 
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+.app {
+  height: 100vh;
+}
+
 .screen-centered {
   position: fixed;
   top: 50%;
